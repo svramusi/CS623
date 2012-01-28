@@ -5,11 +5,11 @@
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
     <ProductVersion>8.0.30703</ProductVersion>
     <SchemaVersion>2.0</SchemaVersion>
-    <ProjectGuid>{740AC952-F47B-4CB2-A98F-E479CFDC3D26}</ProjectGuid>
+    <ProjectGuid>{9BD71AE2-4811-43D7-8BD8-E66173AC2420}</ProjectGuid>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>StraightSkeletonLib</RootNamespace>
-    <AssemblyName>StraightSkeletonLib</AssemblyName>
+    <RootNamespace>InputReadersTests</RootNamespace>
+    <AssemblyName>InputReadersTests</AssemblyName>
     <TargetFrameworkVersion>v4.0</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
   </PropertyGroup>
@@ -31,6 +31,10 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="nunit.framework, Version=2.5.10.11092, Culture=neutral, PublicKeyToken=96d09a1eb7f44a77, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>C:\Program Files (x86)\NUnit 2.5.10\bin\net-2.0\framework\nunit.framework.dll</HintPath>
+    </Reference>
     <Reference Include="System" />
     <Reference Include="System.Core" />
     <Reference Include="System.Xml.Linq" />
@@ -39,9 +43,18 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="LAV.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="Vertex.cs" />
+    <Compile Include="InputReaderTests.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\InputReaders\InputReaders.csproj">
+      <Project>{8228577B-3F0B-4AA8-9294-A5DF2C618B2B}</Project>
+      <Name>InputReaders</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\StraightSkeletonLib\StraightSkeletonLib.csproj">
+      <Project>{740AC952-F47B-4CB2-A98F-E479CFDC3D26}</Project>
+      <Name>StraightSkeletonLib</Name>
+    </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
