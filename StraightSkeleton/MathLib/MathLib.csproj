@@ -5,11 +5,11 @@
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
     <ProductVersion>8.0.30703</ProductVersion>
     <SchemaVersion>2.0</SchemaVersion>
-    <ProjectGuid>{740AC952-F47B-4CB2-A98F-E479CFDC3D26}</ProjectGuid>
+    <ProjectGuid>{BBF481AB-A3AB-4C6F-AAA2-4481CA0EBB29}</ProjectGuid>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>StraightSkeletonLib</RootNamespace>
-    <AssemblyName>StraightSkeletonLib</AssemblyName>
+    <RootNamespace>MathLib</RootNamespace>
+    <AssemblyName>MathLib</AssemblyName>
     <TargetFrameworkVersion>v4.0</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
   </PropertyGroup>
@@ -34,9 +34,14 @@
     <Reference Include="System" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="LAV.cs" />
+    <Compile Include="MathLibrary.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="Vertex.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\StraightSkeletonLib\StraightSkeletonLib.csproj">
+      <Project>{740AC952-F47B-4CB2-A98F-E479CFDC3D26}</Project>
+      <Name>StraightSkeletonLib</Name>
+    </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

@@ -13,6 +13,10 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "InputReaders", "InputReader
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "InputReadersTests", "InputReadersTests\InputReadersTests.csproj", "{9BD71AE2-4811-43D7-8BD8-E66173AC2420}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MathLib", "MathLib\MathLib.csproj", "{BBF481AB-A3AB-4C6F-AAA2-4481CA0EBB29}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MathLibTests", "MathLibTests\MathLibTests.csproj", "{50235A57-CE1A-45B1-B139-D9543006105F}"
+EndProject
 Global
 	GlobalSection(TestCaseManagementSettings) = postSolution
 		CategoryFile = StraightSkeleton.vsmdi
@@ -76,6 +80,26 @@ Global
 		{9BD71AE2-4811-43D7-8BD8-E66173AC2420}.Release|Mixed Platforms.ActiveCfg = Release|Any CPU
 		{9BD71AE2-4811-43D7-8BD8-E66173AC2420}.Release|Mixed Platforms.Build.0 = Release|Any CPU
 		{9BD71AE2-4811-43D7-8BD8-E66173AC2420}.Release|x86.ActiveCfg = Release|Any CPU
+		{BBF481AB-A3AB-4C6F-AAA2-4481CA0EBB29}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{BBF481AB-A3AB-4C6F-AAA2-4481CA0EBB29}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{BBF481AB-A3AB-4C6F-AAA2-4481CA0EBB29}.Debug|Mixed Platforms.ActiveCfg = Debug|Any CPU
+		{BBF481AB-A3AB-4C6F-AAA2-4481CA0EBB29}.Debug|Mixed Platforms.Build.0 = Debug|Any CPU
+		{BBF481AB-A3AB-4C6F-AAA2-4481CA0EBB29}.Debug|x86.ActiveCfg = Debug|Any CPU
+		{BBF481AB-A3AB-4C6F-AAA2-4481CA0EBB29}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{BBF481AB-A3AB-4C6F-AAA2-4481CA0EBB29}.Release|Any CPU.Build.0 = Release|Any CPU
+		{BBF481AB-A3AB-4C6F-AAA2-4481CA0EBB29}.Release|Mixed Platforms.ActiveCfg = Release|Any CPU
+		{BBF481AB-A3AB-4C6F-AAA2-4481CA0EBB29}.Release|Mixed Platforms.Build.0 = Release|Any CPU
+		{BBF481AB-A3AB-4C6F-AAA2-4481CA0EBB29}.Release|x86.ActiveCfg = Release|Any CPU
+		{50235A57-CE1A-45B1-B139-D9543006105F}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{50235A57-CE1A-45B1-B139-D9543006105F}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{50235A57-CE1A-45B1-B139-D9543006105F}.Debug|Mixed Platforms.ActiveCfg = Debug|Any CPU
+		{50235A57-CE1A-45B1-B139-D9543006105F}.Debug|Mixed Platforms.Build.0 = Debug|Any CPU
+		{50235A57-CE1A-45B1-B139-D9543006105F}.Debug|x86.ActiveCfg = Debug|Any CPU
+		{50235A57-CE1A-45B1-B139-D9543006105F}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{50235A57-CE1A-45B1-B139-D9543006105F}.Release|Any CPU.Build.0 = Release|Any CPU
+		{50235A57-CE1A-45B1-B139-D9543006105F}.Release|Mixed Platforms.ActiveCfg = Release|Any CPU
+		{50235A57-CE1A-45B1-B139-D9543006105F}.Release|Mixed Platforms.Build.0 = Release|Any CPU
+		{50235A57-CE1A-45B1-B139-D9543006105F}.Release|x86.ActiveCfg = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
