@@ -40,6 +40,7 @@
   <ItemGroup>
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="InputReaderTests.cs" />
+    <Compile Include="XMLReaderTests.cs" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\InputReaders\InputReaders.csproj">
@@ -50,6 +51,11 @@
       <Project>{740AC952-F47B-4CB2-A98F-E479CFDC3D26}</Project>
       <Name>StraightSkeletonLib</Name>
     </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Input1.xml">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

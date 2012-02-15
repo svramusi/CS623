@@ -74,5 +74,28 @@ namespace StraightSkeletonTests
             Assert.AreEqual(v2, startVertex.GetNextVertex());
             Assert.AreEqual(v3, startVertex.GetPrevVertex());
         }
+
+        [Test]
+        public void TestForEach()
+        {
+            Vertex v1 = new Vertex(0, 0);
+            listOfActiveVertices.Add(v1);
+
+            Vertex v2 = new Vertex(1, 1);
+            listOfActiveVertices.Add(v2);
+
+            Vertex v3 = new Vertex(2, 2);
+            listOfActiveVertices.Add(v3);
+
+            int count = 0;
+            foreach (Vertex v in listOfActiveVertices)
+            {
+                Assert.AreEqual(Convert.ToDouble(count), v.GetX());
+                Assert.AreEqual(Convert.ToDouble(count), v.GetY());
+
+                count++;
+            }
+
+        }
     }
 }

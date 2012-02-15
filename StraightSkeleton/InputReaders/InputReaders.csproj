@@ -42,6 +42,7 @@
     <Compile Include="IInputReader.cs" />
     <Compile Include="InputReader.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="XMLReader.cs" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\StraightSkeletonLib\StraightSkeletonLib.csproj">
