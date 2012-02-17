@@ -95,7 +95,57 @@ namespace StraightSkeletonTests
 
                 count++;
             }
+        }
 
+        [Test]
+        public void TestGet()
+        {
+            Vertex v1 = new Vertex(0, 0);
+            listOfActiveVertices.Add(v1);
+
+            Vertex v2 = new Vertex(1, 1);
+            listOfActiveVertices.Add(v2);
+
+            Vertex v3 = new Vertex(2, 2);
+            listOfActiveVertices.Add(v3);
+
+            Vertex v4 = new Vertex(3, 3);
+            listOfActiveVertices.Add(v4);
+
+            Vertex v5 = new Vertex(4, 4);
+            listOfActiveVertices.Add(v5);
+
+            Vertex v6 = new Vertex(5, 5);
+            listOfActiveVertices.Add(v6);
+
+
+            Vertex getV = listOfActiveVertices.Get(2);
+            Assert.AreEqual(v2, getV);
+
+            getV = listOfActiveVertices.Get(5);
+            Assert.AreEqual(v5, getV);
+        }
+
+        [Test]
+        public void TestLength()
+        {
+            listOfActiveVertices.Add(new Vertex(0, 0));
+            listOfActiveVertices.Add(new Vertex(1, 1));
+
+            Assert.AreEqual(2, listOfActiveVertices.Length);
+        }
+
+        [Test]
+        public void TestGetNextOnLastElement()
+        {
+            Vertex v1 = new Vertex(0, 0);
+            listOfActiveVertices.Add(v1);
+
+            Vertex v2 = new Vertex(1, 1);
+            listOfActiveVertices.Add(v2);
+
+            Vertex lastVertex = listOfActiveVertices.Get(listOfActiveVertices.Length);
+            Assert.AreEqual(v1, lastVertex.GetNextVertex());
         }
     }
 }

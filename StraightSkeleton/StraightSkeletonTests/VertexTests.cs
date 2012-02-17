@@ -93,5 +93,18 @@ namespace StraightSkeletonTests
 
             Assert.IsFalse(v1.Equals(v2));
         }
+
+        [Test]
+        public void TestAngleBisector()
+        {
+            Vertex v1 = new Vertex(1, 1);
+            Vertex bisector = new Vertex(2, 3);
+
+            v1.AngleBisector = bisector;
+
+            Assert.AreEqual(2, bisector.GetX());
+            Assert.AreEqual(3, bisector.GetY());
+
+        }
     }
 }

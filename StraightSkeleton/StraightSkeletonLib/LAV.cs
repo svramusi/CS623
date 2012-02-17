@@ -31,6 +31,7 @@ namespace StraightSkeletonLib
             {
                 endVertex.SetNextVertex(v);
                 v.SetPrevVertex(endVertex);
+                v.SetNextVertex(startVertex);
             }
 
             length++;
@@ -40,6 +41,25 @@ namespace StraightSkeletonLib
                 startVertex.SetPrevVertex(endVertex);
         }
 
+        public int Length
+        {
+            get { return this.length; }
+        }
+
+        public Vertex Get(int index)
+        {
+            Vertex currentVertex = this.startVertex;
+
+            int count = 1;
+            while (count < index)
+            {
+                count++;
+                currentVertex = currentVertex.GetNextVertex();
+            }
+
+            return currentVertex;
+        }
+        
         IEnumerator IEnumerable.GetEnumerator()
         {
             return (IEnumerator)GetEnumerator();

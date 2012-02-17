@@ -9,6 +9,7 @@ namespace StraightSkeletonLib
 
         private Vertex prevVertex;
         private Vertex nextVertex;
+        private Vertex bisectorVertex;
 
         public Vertex(double x, double y)
         {
@@ -61,6 +62,12 @@ namespace StraightSkeletonLib
                 return true;
             else
                 return false;
+        }
+
+        public Vertex AngleBisector
+        {
+            get { return this.bisectorVertex; }
+            set { this.bisectorVertex = value; }
         }
     }
 }
