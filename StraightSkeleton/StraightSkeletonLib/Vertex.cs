@@ -4,6 +4,8 @@ namespace StraightSkeletonLib
 {
     public class Vertex
     {
+        private bool processed; 
+
         private double x;
         private double y;
 
@@ -16,8 +18,21 @@ namespace StraightSkeletonLib
             this.x = x;
             this.y = y;
 
-            prevVertex = null;
-            nextVertex = null;
+            this.prevVertex = null;
+            this.nextVertex = null;
+            this.bisectorVertex = null;
+
+            this.processed = false;
+        }
+
+        public bool Processed
+        {
+            get { return this.processed; }
+        }
+
+        public void SetProcessed()
+        {
+            this.processed = true;
         }
 
         public double GetX()

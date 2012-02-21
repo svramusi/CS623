@@ -2,6 +2,8 @@
 
 using StraightSkeletonLib;
 
+//SOME MATH CALCULATIONS TAKEN FROM http://people.sc.fsu.edu/~jburkardt/cpp_src/geometry/geometry.cpp 
+
 namespace MathLib
 {
     public class MathLibrary
@@ -75,6 +77,19 @@ namespace MathLib
             double yIntersection = line1.GetY(xInteresection);
 
             return new Vertex(xInteresection, yIntersection);
+        }
+
+        public static double GetDistanceBetweenLineAndVertex(Vertex endPoint1, Vertex endPoint2, Vertex point)
+        {
+            double bottom = ((endPoint2.GetX() - endPoint1.GetX()) * (endPoint2.GetX() - endPoint1.GetX())) + ((endPoint2.GetY() - endPoint1.GetY()) * (endPoint2.GetY() - endPoint1.GetY()));
+            double dot = ((point.GetX() - endPoint1.GetX()) * (endPoint2.GetX() - endPoint1.GetX())) + ((point.GetY() - endPoint1.GetY()) * (endPoint2.GetY() - endPoint1.GetY()));
+
+            double t = dot / bottom;
+
+            double newX = endPoint1.GetX() + t * (endPoint2.GetX() - endPoint1.GetX());
+            double newY = endPoint1.GetY() + t * (endPoint2.GetY() - endPoint1.GetY());
+            
+            return Math.Sqrt(((point.GetX() - newX) * (point.GetX() - newX)) + ((point.GetY() - newY) * (point.GetY() - newY)));
         }
     }
 }

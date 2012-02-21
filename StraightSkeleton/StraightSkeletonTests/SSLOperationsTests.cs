@@ -43,9 +43,14 @@ namespace StraightSkeletonTests
         [Test]
         public void TestClosestIntersection()
         {
-            Vertex actualIntersection = SSLOperations.GetClosestIntersection(listOfActiveVertices.GetStart());
-            Assert.AreEqual(4, Math.Round(actualIntersection.GetX()));
-            Assert.AreEqual(4, Math.Round(actualIntersection.GetY()));
+            Intersection intersection = SSLOperations.GetClosestIntersection(listOfActiveVertices.GetStart());
+            Assert.AreEqual(4, Math.Round(intersection.GetX()));
+            Assert.AreEqual(4, Math.Round(intersection.GetY()));
+
+            Assert.AreEqual(listOfActiveVertices.Get(2), intersection.GetVA());
+            Assert.AreEqual(listOfActiveVertices.GetStart(), intersection.GetVB());
+
+            Assert.AreEqual(2, Math.Round(intersection.Distance));
         }
     }
 }

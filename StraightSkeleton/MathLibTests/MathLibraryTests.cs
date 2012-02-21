@@ -34,6 +34,12 @@ namespace MathLibTests
         }
 
         [Test]
+        public void DistanceBetweenLineAndVertexTest()
+        {
+            Assert.AreEqual(2, MathLibrary.GetDistanceBetweenLineAndVertex(new Vertex(2, 6), new Vertex(2, 2), new Vertex(4, 4)));
+        }
+
+        [Test]
         public void AngleBetweenVerticesTests()
         {
             Vertex v1;

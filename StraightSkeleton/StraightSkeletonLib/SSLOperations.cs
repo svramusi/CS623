@@ -14,7 +14,7 @@ namespace StraightSkeletonLib
             }
         }
 
-        public static Vertex GetClosestIntersection(Vertex v)
+        public static Intersection GetClosestIntersection(Vertex v)
         {
             Vertex next = v.GetNextVertex();
             Vertex prev = v.GetPrevVertex();
@@ -23,9 +23,9 @@ namespace StraightSkeletonLib
             Vertex prevIntersection = MathLibrary.GetIntersectionPoint(MathLibrary.GetLineEquation(prev, prev.AngleBisector), MathLibrary.GetLineEquation(v, v.AngleBisector));
 
             if (MathLibrary.GetDistanceBetweenVertices(v, nextIntersection) < MathLibrary.GetDistanceBetweenVertices(v, prevIntersection))
-                return nextIntersection;
+                return new Intersection(nextIntersection.GetX(), nextIntersection.GetY(), next, v);
             else
-                return prevIntersection;
+                return new Intersection(prevIntersection.GetX(), prevIntersection.GetY(), v, prev);
         }
     }
 }

@@ -106,5 +106,15 @@ namespace StraightSkeletonTests
             Assert.AreEqual(3, bisector.GetY());
 
         }
+
+        [Test]
+        public void TestProcessed()
+        {
+            Vertex v = new Vertex(0, 0);
+            Assert.IsFalse(v.Processed);
+
+            v.SetProcessed();
+            Assert.IsTrue(v.Processed);
+        }
     }
 }
