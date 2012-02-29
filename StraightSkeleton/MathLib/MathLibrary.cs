@@ -89,7 +89,12 @@ namespace MathLib
             double newX = endPoint1.GetX() + t * (endPoint2.GetX() - endPoint1.GetX());
             double newY = endPoint1.GetY() + t * (endPoint2.GetY() - endPoint1.GetY());
             
-            return Math.Sqrt(((point.GetX() - newX) * (point.GetX() - newX)) + ((point.GetY() - newY) * (point.GetY() - newY)));
+            double retVal = Math.Sqrt(((point.GetX() - newX) * (point.GetX() - newX)) + ((point.GetY() - newY) * (point.GetY() - newY)));
+
+            if (double.IsNaN(retVal))
+                return double.PositiveInfinity;
+            else
+                return retVal;
         }
     }
 }

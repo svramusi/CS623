@@ -147,5 +147,81 @@ namespace StraightSkeletonTests
             Vertex lastVertex = listOfActiveVertices.Get(listOfActiveVertices.Length);
             Assert.AreEqual(v1, lastVertex.GetNextVertex());
         }
+
+        [Test]
+        public void TestReplace()
+        {
+            listOfActiveVertices.Add(new Vertex(1, 1));
+            listOfActiveVertices.Add(new Vertex(2, 2));
+            listOfActiveVertices.Add(new Vertex(3, 3));
+            listOfActiveVertices.Add(new Vertex(4, 4));
+            listOfActiveVertices.Add(new Vertex(5, 5));
+            listOfActiveVertices.Add(new Vertex(6, 6));
+
+            listOfActiveVertices.Insert(new Vertex(9, 9), listOfActiveVertices.Get(3), listOfActiveVertices.Get(4));
+
+            Assert.AreEqual(1, listOfActiveVertices.Get(1).GetX());
+            Assert.AreEqual(2, listOfActiveVertices.Get(2).GetX());
+            Assert.AreEqual(9, listOfActiveVertices.Get(3).GetX());
+            Assert.AreEqual(5, listOfActiveVertices.Get(4).GetX());
+            Assert.AreEqual(6, listOfActiveVertices.Get(5).GetX());
+        }
+
+        [Test]
+        public void TestReplaceHead()
+        {
+            listOfActiveVertices.Add(new Vertex(1, 1));
+            listOfActiveVertices.Add(new Vertex(2, 2));
+            listOfActiveVertices.Add(new Vertex(3, 3));
+            listOfActiveVertices.Add(new Vertex(4, 4));
+            listOfActiveVertices.Add(new Vertex(5, 5));
+            listOfActiveVertices.Add(new Vertex(6, 6));
+
+            listOfActiveVertices.Insert(new Vertex(9, 9), listOfActiveVertices.Get(1), listOfActiveVertices.Get(2));
+
+            Assert.AreEqual(9, listOfActiveVertices.Get(1).GetX());
+            Assert.AreEqual(3, listOfActiveVertices.Get(2).GetX());
+            Assert.AreEqual(4, listOfActiveVertices.Get(3).GetX());
+            Assert.AreEqual(5, listOfActiveVertices.Get(4).GetX());
+            Assert.AreEqual(6, listOfActiveVertices.Get(5).GetX());
+        }
+
+        [Test]
+        public void TestReplaceTail()
+        {
+            listOfActiveVertices.Add(new Vertex(1, 1));
+            listOfActiveVertices.Add(new Vertex(2, 2));
+            listOfActiveVertices.Add(new Vertex(3, 3));
+            listOfActiveVertices.Add(new Vertex(4, 4));
+            listOfActiveVertices.Add(new Vertex(5, 5));
+            listOfActiveVertices.Add(new Vertex(6, 6));
+
+            listOfActiveVertices.Insert(new Vertex(9, 9), listOfActiveVertices.Get(5), listOfActiveVertices.Get(6));
+
+            Assert.AreEqual(1, listOfActiveVertices.Get(1).GetX());
+            Assert.AreEqual(2, listOfActiveVertices.Get(2).GetX());
+            Assert.AreEqual(3, listOfActiveVertices.Get(3).GetX());
+            Assert.AreEqual(4, listOfActiveVertices.Get(4).GetX());
+            Assert.AreEqual(9, listOfActiveVertices.Get(5).GetX());
+        }
+
+        [Test]
+        public void TestReplaceWrapAround()
+        {
+            listOfActiveVertices.Add(new Vertex(1, 1));
+            listOfActiveVertices.Add(new Vertex(2, 2));
+            listOfActiveVertices.Add(new Vertex(3, 3));
+            listOfActiveVertices.Add(new Vertex(4, 4));
+            listOfActiveVertices.Add(new Vertex(5, 5));
+            listOfActiveVertices.Add(new Vertex(6, 6));
+
+            listOfActiveVertices.Insert(new Vertex(9, 9), listOfActiveVertices.Get(6), listOfActiveVertices.Get(1));
+
+            Assert.AreEqual(2, listOfActiveVertices.Get(1).GetX());
+            Assert.AreEqual(3, listOfActiveVertices.Get(2).GetX());
+            Assert.AreEqual(4, listOfActiveVertices.Get(3).GetX());
+            Assert.AreEqual(5, listOfActiveVertices.Get(4).GetX());
+            Assert.AreEqual(9, listOfActiveVertices.Get(5).GetX());
+        }
     }
 }

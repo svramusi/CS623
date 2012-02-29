@@ -25,5 +25,13 @@ namespace StraightSkeletonTests
 
             Assert.AreEqual(2, intersection.Distance);
         }
+
+        [Test]
+        public void TestEqualIntersections()
+        {
+            Intersection intersection1 = new Intersection(4, 4, new Vertex(2, 6), new Vertex(2, 6));
+            Intersection intersection2 = new Intersection(4, 4, new Vertex(2, 6), new Vertex(2, 6));
+            Assert.AreEqual(intersection1, intersection2);
+        }
     }
 }

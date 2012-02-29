@@ -13,9 +13,12 @@ namespace StraightSkeletonLib
             last = null;
         }
 
-        public double GetLast()
+        public bool IsEmpty()
         {
-            return last.Distance;
+            if (head == null)
+                return true;
+            else
+                return false;
         }
 
         private void UpdateLast()
@@ -50,11 +53,16 @@ namespace StraightSkeletonLib
             last = last.Parent;
         }
 
-        public void Push(double distance)
+        public void PushDouble(double d)
+        {
+            Push(new Intersection(0, 0, new Vertex(0, 0), new Vertex(0, 0), d));
+        }
+
+        public void Push(Intersection intersection)
         {
             if (head == null)
             {
-                head = new Element(distance, null);
+                head = new Element(intersection, null);
                 last = head;
             }
             else
@@ -63,8 +71,8 @@ namespace StraightSkeletonLib
                 {
                     UpdateLast();
                 }
-                
-                Element newElement = new Element(distance, last);
+
+                Element newElement = new Element(intersection, last);
 
                 if (last.Left == null)
                     last.Left = newElement;
@@ -207,9 +215,14 @@ namespace StraightSkeletonLib
                 head = element;
         }
 
-        public double GetMin()
+        public double GetMinDouble()
         {
-            double retVal = head.Distance;
+            return GetMin().Distance;
+        }
+
+        public Intersection GetMin()
+        {
+            Intersection retVal = head.Intersection;
 
             if (last.Right == null && last.Left == null)
             {
@@ -329,24 +342,24 @@ namespace StraightSkeletonLib
 
     class Element
     {
-        private double distance;
+        private Intersection intersection;
 
         private Element parent;
         private Element leftE;
         private Element rightE;
 
-        public Element(double distance, Element parent)
+        public Element(Intersection intersection, Element parent)
         {
-            this.distance = distance;
+            this.intersection = intersection;
 
             this.leftE = null;
             this.rightE = null;
             this.parent = parent;
         }
 
-        public double Distance
+        public Intersection Intersection
         {
-            get { return this.distance; }
+            get { return this.intersection; }
         }
 
         public Element Left
@@ -391,7 +404,7 @@ namespace StraightSkeletonLib
             if (obj.GetType() != GetType())
                 return false;
 
-            if (this.distance == ((Element)obj).distance)
+            if (this.intersection.Distance == ((Element)obj).intersection.Distance)
                 return true;
             else
                 return false;
@@ -415,11 +428,11 @@ namespace StraightSkeletonLib
 
         public static int Comparison(Element e1, Element e2)
         {
-            if (e1.distance < e2.distance)
+            if (e1.intersection.Distance < e2.intersection.Distance)
                 return -1;
-            else if (e1.distance == e2.distance)
+            else if (e1.intersection.Distance == e2.intersection.Distance)
                 return 0;
-            else if (e1.distance > e2.distance)
+            else if (e1.intersection.Distance > e2.intersection.Distance)
                 return 1;
 
             return 0;

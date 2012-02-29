@@ -41,6 +41,27 @@ namespace StraightSkeletonLib
                 startVertex.SetPrevVertex(endVertex);
         }
 
+        public void Insert(Vertex newVertex, Vertex prevVertex, Vertex nextVertex)
+        {
+            Vertex prev = prevVertex.GetPrevVertex();
+            Vertex next = nextVertex.GetNextVertex();
+            
+            prev.SetNextVertex(newVertex);
+            newVertex.SetPrevVertex(prev);
+
+            next.SetPrevVertex(newVertex);
+            newVertex.SetNextVertex(next);
+
+            if (prevVertex.Equals(this.startVertex))
+                startVertex = newVertex;
+
+            if (nextVertex.Equals(this.startVertex))
+                startVertex = nextVertex.GetNextVertex();
+
+            if (nextVertex.Equals(this.endVertex))
+                endVertex = newVertex;
+        }
+
         public int Length
         {
             get { return this.length; }

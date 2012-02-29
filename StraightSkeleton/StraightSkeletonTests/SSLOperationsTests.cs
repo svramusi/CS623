@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 
 using StraightSkeletonLib;
 using MathLib;
@@ -21,7 +22,7 @@ namespace StraightSkeletonTests
             listOfActiveVertices.Add(new Vertex(15, 2));
             listOfActiveVertices.Add(new Vertex(15, 6));
 
-            SSLOperations.FindAngleBisectors(listOfActiveVertices);
+            SSLOperations.ComputeAngleBisectors(listOfActiveVertices);
         }
 
         [Test]
@@ -51,6 +52,73 @@ namespace StraightSkeletonTests
             Assert.AreEqual(listOfActiveVertices.GetStart(), intersection.GetVB());
 
             Assert.AreEqual(2, Math.Round(intersection.Distance));
+        }
+
+        [Test]
+        public void TestNoIntersection()
+        {
+            LAV infiniteLav = new LAV();
+            infiniteLav.Add(new Vertex(0, 0));
+            infiniteLav.Add(new Vertex(1, 0));
+            infiniteLav.Add(new Vertex(2, 0));
+            SSLOperations.ComputeAngleBisectors(infiniteLav);
+
+            Intersection intersection = SSLOperations.GetClosestIntersection(infiniteLav.GetStart());
+            Assert.IsTrue(double.IsInfinity(intersection.Distance));
+        }
+
+        [Test]
+        public void TestGeneratePriorityQueue()
+        {
+            SSLOperations.GeneratePriorityQueue(listOfActiveVertices);
+
+            Intersection i = null;
+
+            i = SSLOperations.GetMinIntersection();
+            Assert.AreEqual(4, Math.Round(i.GetX()));
+            Assert.AreEqual(4, Math.Round(i.GetY()));
+            Assert.AreEqual(2, Math.Round(i.Distance));
+
+            i = SSLOperations.GetMinIntersection();
+            Assert.AreEqual(4, Math.Round(i.GetX()));
+            Assert.AreEqual(4, Math.Round(i.GetY()));
+            Assert.AreEqual(2, Math.Round(i.Distance));
+
+            i = SSLOperations.GetMinIntersection();
+            Assert.AreEqual(13, Math.Round(i.GetX()));
+            Assert.AreEqual(4, Math.Round(i.GetY()));
+            Assert.AreEqual(2, Math.Round(i.Distance));
+
+            i = SSLOperations.GetMinIntersection();
+            Assert.AreEqual(13, Math.Round(i.GetX()));
+            Assert.AreEqual(4, Math.Round(i.GetY()));
+            Assert.AreEqual(2, Math.Round(i.Distance));
+        }
+
+        [Test]
+        public void TestPointerVerticesAreProcessed()
+        {
+            SSLOperations.GeneratePriorityQueue(listOfActiveVertices);
+            Intersection i = null;
+
+            i = SSLOperations.GetMinIntersection();
+            i = SSLOperations.GetMinIntersection();
+            Assert.AreEqual(6, i.GetVB().GetY());
+
+            i = SSLOperations.GetMinIntersection();
+            i = SSLOperations.GetMinIntersection();
+            Assert.AreEqual(2, i.GetVB().GetY());
+        }
+
+        [Test]
+        public void TestGetResult()
+        {
+            List<LineSegment> result = SSLOperations.GenerateSkeleton(listOfActiveVertices);
+
+            Assert.AreEqual(new LineSegment(2, 6, 4, 4), result[0]);
+            Assert.AreEqual(new LineSegment(2, 2, 4, 4), result[1]);
+            Assert.AreEqual(new LineSegment(15, 2, 13, 4), result[2]);
+            Assert.AreEqual(new LineSegment(15, 6, 13, 4), result[3]);
         }
     }
 }
