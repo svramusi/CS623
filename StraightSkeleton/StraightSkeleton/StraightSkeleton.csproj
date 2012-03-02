@@ -10,7 +10,7 @@
     <AppDesignerFolder>Properties</AppDesignerFolder>
     <RootNamespace>StraightSkeleton</RootNamespace>
     <AssemblyName>StraightSkeleton</AssemblyName>
-    <TargetFrameworkVersion>v3.5</TargetFrameworkVersion>
+    <TargetFrameworkVersion>v4.0</TargetFrameworkVersion>
     <TargetFrameworkProfile>
     </TargetFrameworkProfile>
     <FileAlignment>512</FileAlignment>
@@ -46,7 +46,19 @@
     <None Include="app.config" />
   </ItemGroup>
   <ItemGroup>
-    <Content Include="Input1.xml" />
+    <Content Include="Input1.xml">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\InputReaders\InputReaders.csproj">
+      <Project>{8228577B-3F0B-4AA8-9294-A5DF2C618B2B}</Project>
+      <Name>InputReaders</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\StraightSkeletonLib\StraightSkeletonLib.csproj">
+      <Project>{740AC952-F47B-4CB2-A98F-E479CFDC3D26}</Project>
+      <Name>StraightSkeletonLib</Name>
+    </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

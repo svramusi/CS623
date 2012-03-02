@@ -115,10 +115,36 @@ namespace StraightSkeletonTests
         {
             List<LineSegment> result = SSLOperations.GenerateSkeleton(listOfActiveVertices);
 
+            //foreach (LineSegment ls in result)
+                //Console.WriteLine(ls.ToString());
+
             Assert.AreEqual(new LineSegment(2, 6, 4, 4), result[0]);
             Assert.AreEqual(new LineSegment(2, 2, 4, 4), result[1]);
             Assert.AreEqual(new LineSegment(15, 2, 13, 4), result[2]);
             Assert.AreEqual(new LineSegment(15, 6, 13, 4), result[3]);
+            Assert.AreEqual(new LineSegment(4, 4, 13, 4), result[4]);
         }
+
+        //THIS CAUSES IT TO CRASH, QUITE THE EDGE CONDITION... 
+        //[Test]
+        //public void TestGetResult2()
+        //{
+        //    LAV listOfActiveVertices2 = new LAV();
+        //    listOfActiveVertices2.Add(new Vertex(3, 10));
+        //    listOfActiveVertices2.Add(new Vertex(0, 7));
+        //    listOfActiveVertices2.Add(new Vertex(0, 3));
+        //    listOfActiveVertices2.Add(new Vertex(3, 0));
+        //    listOfActiveVertices2.Add(new Vertex(7, 0));
+        //    listOfActiveVertices2.Add(new Vertex(10, 3));
+        //    listOfActiveVertices2.Add(new Vertex(10, 7));
+        //    listOfActiveVertices2.Add(new Vertex(7, 10));
+
+        //    SSLOperations.ComputeAngleBisectors(listOfActiveVertices2);
+
+        //    List<LineSegment> result = SSLOperations.GenerateSkeleton(listOfActiveVertices2);
+
+        //    foreach (LineSegment ls in result)
+        //        Console.WriteLine(ls.ToString());
+        //}
     }
 }

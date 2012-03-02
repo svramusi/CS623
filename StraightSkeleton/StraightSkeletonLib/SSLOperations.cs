@@ -26,9 +26,17 @@ namespace StraightSkeletonLib
             Vertex prevIntersection = MathLibrary.GetIntersectionPoint(MathLibrary.GetLineEquation(prev, prev.AngleBisector), MathLibrary.GetLineEquation(v, v.AngleBisector));
             
             if (MathLibrary.GetDistanceBetweenVertices(v, nextIntersection) < MathLibrary.GetDistanceBetweenVertices(v, prevIntersection))
-                return new Intersection(nextIntersection.GetX(), nextIntersection.GetY(), next, v);
+            {
+                Intersection i = new Intersection(nextIntersection.GetX(), nextIntersection.GetY(), next, v);
+                //Console.WriteLine("i'm " + v.ToString() + " and my cloests intersection is x: " + i.GetX() + " y: " + i.GetY() + " distance: " + i.Distance);
+                return i;
+            }
             else
-                return new Intersection(prevIntersection.GetX(), prevIntersection.GetY(), v, prev);
+            {
+                Intersection i = new Intersection(prevIntersection.GetX(), prevIntersection.GetY(), v, prev);
+                //Console.WriteLine("i'm " + v.ToString() + " and my cloests intersection is x: " + i.GetX() + " y: " + i.GetY() + " distance: " + i.Distance);
+                return i;
+            }
         }
 
         public static void GeneratePriorityQueue(LAV listOfActiveVertices)
@@ -48,21 +56,40 @@ namespace StraightSkeletonLib
 
             if (queue.IsEmpty())
                 SSLOperations.GeneratePriorityQueue(listOfActiveVertices);
-
+            
             while (!queue.IsEmpty())
             {
-                Intersection intersection = GetMinIntersection();
-
-                if (!intersection.GetVA().Processed && !intersection.GetVB().Processed)
+                while (!queue.IsEmpty())
                 {
-                    result.Add(new LineSegment(intersection.GetVB().GetX(), intersection.GetVB().GetY(), intersection.GetX(), intersection.GetY()));
-                    result.Add(new LineSegment(intersection.GetVA().GetX(), intersection.GetVA().GetY(), intersection.GetX(), intersection.GetY()));
+                    Intersection intersection = GetMinIntersection();
 
-                    Vertex newVertex = new Vertex(intersection.GetX(), intersection.GetY());
+                    if (!intersection.GetVA().Processed && !intersection.GetVB().Processed)
+                    {
+                        result.Add(new LineSegment(intersection.GetVB().GetX(), intersection.GetVB().GetY(), intersection.GetX(), intersection.GetY()));
+                        result.Add(new LineSegment(intersection.GetVA().GetX(), intersection.GetVA().GetY(), intersection.GetX(), intersection.GetY()));
+
+                        Vertex newVertex = new Vertex(intersection.GetX(), intersection.GetY());
+                        listOfActiveVertices.Insert(newVertex, intersection.GetVB(), intersection.GetVA());
+
+                        //Console.WriteLine("\n\nafter insert");
+                        //foreach (Vertex v in listOfActiveVertices)
+                        //    Console.WriteLine(v.ToString());
+                    }
+
+                    intersection.GetVA().SetProcessed();
+                    intersection.GetVB().SetProcessed();
                 }
 
-                intersection.GetVA().SetProcessed();
-                intersection.GetVB().SetProcessed();
+                Vertex startVertex = listOfActiveVertices.GetStart();
+                if (startVertex.GetNextVertex().GetNextVertex().Equals(startVertex))
+                {
+                    result.Add(new LineSegment(startVertex.GetX(), startVertex.GetY(), startVertex.GetNextVertex().GetX(), startVertex.GetNextVertex().GetY()));
+                }
+                else
+                {
+                    ComputeAngleBisectors(listOfActiveVertices);
+                    SSLOperations.GeneratePriorityQueue(listOfActiveVertices);
+                }
             }
 
 

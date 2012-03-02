@@ -168,6 +168,23 @@ namespace StraightSkeletonTests
         }
 
         [Test]
+        public void TestReplace2()
+        {
+            listOfActiveVertices.Add(new Vertex(2, 6));
+            listOfActiveVertices.Add(new Vertex(2, 2));
+            listOfActiveVertices.Add(new Vertex(15, 2));
+            listOfActiveVertices.Add(new Vertex(15, 6));
+
+            listOfActiveVertices.Insert(new Vertex(4, 4), listOfActiveVertices.Get(1), listOfActiveVertices.Get(2));
+
+            Assert.AreEqual(4, listOfActiveVertices.Get(1).GetX());
+            Assert.AreEqual(15, listOfActiveVertices.Get(2).GetX());
+            Assert.AreEqual(15, listOfActiveVertices.Get(3).GetX());
+
+            Assert.AreEqual(3, listOfActiveVertices.Length);
+        }
+
+        [Test]
         public void TestReplaceHead()
         {
             listOfActiveVertices.Add(new Vertex(1, 1));

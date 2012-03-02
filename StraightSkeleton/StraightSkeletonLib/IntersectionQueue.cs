@@ -21,6 +21,11 @@ namespace StraightSkeletonLib
                 return false;
         }
 
+        public double Peak()
+        {
+            return head.Intersection.Distance;
+        }
+
         private void UpdateLast()
         {
             while (last.Parent != null && last.Parent.Right == last)

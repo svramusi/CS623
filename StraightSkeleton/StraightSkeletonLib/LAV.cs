@@ -60,6 +60,8 @@ namespace StraightSkeletonLib
 
             if (nextVertex.Equals(this.endVertex))
                 endVertex = newVertex;
+
+            length--;
         }
 
         public int Length

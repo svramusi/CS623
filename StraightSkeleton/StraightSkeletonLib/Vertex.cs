@@ -79,6 +79,11 @@ namespace StraightSkeletonLib
                 return false;
         }
 
+        public override string ToString()
+        {
+            return "x: " + this.x + " y: " + this.y;
+        }
+
         public Vertex AngleBisector
         {
             get { return this.bisectorVertex; }
