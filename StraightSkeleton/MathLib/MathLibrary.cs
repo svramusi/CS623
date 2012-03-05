@@ -30,34 +30,46 @@ namespace MathLib
             return rad * (180.0 / Math.PI);
         }
 
+        public static double DegreesToRadians(double degrees)
+        {
+            return degrees * (Math.PI / 180.0);
+        }
+
         private static double GetDistanceOfVertex(double x, double y)
         {
             return Math.Sqrt((x * x) + (y * y));
         }
 
-        public static Vertex GetAngleBisectorVertex(Vertex v1, Vertex v2, Vertex v3)
+        public static Vertex GetAngleBisectorVertex(Vertex prev, Vertex current, Vertex next)
         {
+            if (current.Type == Vertex.VertexType.Undefined)
+                throw new Exception("Undefined vertex type.");
+
             double bisectorX = 0;
             double bisectorY = 0;
 
-            double distance12 = GetDistanceBetweenVertices(v1, v2);
-            double distance32 = GetDistanceBetweenVertices(v3, v2);
+            double distance12 = GetDistanceBetweenVertices(prev, current);
+            double distance32 = GetDistanceBetweenVertices(next, current);
 
-            bisectorX = (v1.GetX() - v2.GetX()) / distance12;
-            bisectorY = (v1.GetY() - v2.GetY()) / distance12;
+            bisectorX = (prev.GetX() - current.GetX()) / distance12;
+            bisectorY = (prev.GetY() - current.GetY()) / distance12;
 
-            bisectorX = bisectorX + ((v3.GetX() - v2.GetX()) / distance32);
-            bisectorY = bisectorY + ((v3.GetY() - v2.GetY()) / distance32);
+            bisectorX = bisectorX + ((next.GetX() - current.GetX()) / distance32);
+            bisectorY = bisectorY + ((next.GetY() - current.GetY()) / distance32);
 
             bisectorX = bisectorX * 0.5;
             bisectorY = bisectorY * 0.5;
 
             double distance = GetDistanceOfVertex(bisectorX, bisectorY);
 
-            bisectorX = v2.GetX() + (bisectorX / distance);
-            bisectorY = v2.GetY() + (bisectorY / distance);
+            bisectorX = current.GetX() + (bisectorX / distance);
+            bisectorY = current.GetY() + (bisectorY / distance);
 
-            return new Vertex(bisectorX, bisectorY);
+            Vertex bisectorVertex = new Vertex(bisectorX, bisectorY);            
+            if (current.Type == Vertex.VertexType.Split)
+                bisectorVertex = Rotate(current, bisectorVertex, 180);
+
+            return bisectorVertex;
         }
 
         public static LineEquation GetLineEquation(Vertex v1, Vertex v2)
@@ -95,6 +107,135 @@ namespace MathLib
                 return double.PositiveInfinity;
             else
                 return retVal;
+        }
+
+        public static Vertex Rotate(Vertex pivotPoint, Vertex point, double deg)
+        {            
+            double angle = DegreesToRadians(deg);
+
+            double x = pivotPoint.GetX() + Math.Cos(angle) * (point.GetX() - pivotPoint.GetX()) - Math.Sin(angle) * (point.GetY() - pivotPoint.GetY());
+            double y = pivotPoint.GetY() + Math.Sin(angle) * (point.GetX() - pivotPoint.GetX()) + Math.Cos(angle) * (point.GetY() - pivotPoint.GetY());
+
+            return new Vertex(x, y);
+        }
+
+        public static bool IsPointLeftOfLine(Vertex v1, Vertex v2, Vertex point)
+        {
+            LineEquation lineEquation = GetLineEquation(v1, v2);
+            if (lineEquation.Slope < 0) //NEGATIVE
+            {
+                if (point.GetX() > v1.GetX()) //FAR RIGHT
+                {
+                    return false;
+                }
+                else if (point.GetX() >= v2.GetX() && point.GetX() <= v1.GetX()) //BETWEEN
+                {
+                    double lineY = lineEquation.GetY(point.GetX());
+
+                    if (point.GetY() >= lineY)
+                        return false;
+                    else
+                        return true;
+                }
+                else if (point.GetX() < v2.GetX()) // FAR LEFT
+                {
+                    if (point.GetY() > v1.GetY() && point.GetY() < v2.GetY())
+                        return true;
+                    else
+                        return false;
+                }
+                else
+                    return false;
+            }
+            else if (lineEquation.Slope > 0) //POSITIVE
+            {
+                if (point.GetX() < v2.GetX()) //FAR LEFT
+                {
+                    return false;
+                }
+                else if (point.GetX() <= v1.GetX() && point.GetX() >= v2.GetX()) //BETWEEN
+                {
+                    double lineY = lineEquation.GetY(point.GetX());
+
+                    if (point.GetY() >= lineY)
+                        return false;
+                    else
+                        return true;
+                }
+                else if (point.GetX() > v1.GetX()) //FAR RIGHT
+                {
+                    if (point.GetY() > v2.GetY() && point.GetY() < v1.GetY())
+                        return true;
+                    else
+                        return false;
+                }
+                else
+                    return false;
+            }
+            else //HORIZONTAL OR VERTICAL
+            {
+                if (v1.GetX() == v2.GetX()) //VERTICAL
+                {
+                    if (v2.GetY() > v1.GetY()) //GOING UP
+                    {
+                        if (point.GetX() < v1.GetX() && point.GetY() > v1.GetY() && point.GetY() < v2.GetY())
+                            return true;
+                        else
+                            return false;
+                    }
+                    else //GOING DOWN
+                    {
+                        if (point.GetX() > v1.GetY() && point.GetY() < v1.GetY() && point.GetY() > v2.GetY())
+                            return true;
+                        else
+                            return false;
+                    }
+                }
+                else //HORIZONTAL
+                {
+                    if (v1.GetX() < v2.GetX()) //LEFT TO RIGHT
+                    {
+                        if (point.GetY() > v1.GetY() && point.GetX() > v1.GetX() && point.GetX() < v2.GetX())
+                            return true;
+                        else
+                            return false;
+                    }
+                    else //RIGHT TO LEFT
+                    {
+                        if (point.GetY() < v1.GetY() && point.GetX() < v1.GetX() && point.GetX() > v2.GetX())
+                            return true;
+                        else
+                            return false;
+                    }
+                }
+            }
+        }
+
+        //POINTS MUST BE COUNTER CLOCKWISE
+        public static bool TriangleContainsPoint(Vertex v1, Vertex v2, Vertex v3, Vertex point)
+        {
+            bool side1 = IsPointLeftOfLine(v1, v2, point);
+            bool side2 = IsPointLeftOfLine(v2, v3, point);
+            bool side3 = IsPointLeftOfLine(v3, v1, point);
+
+            if (side1 && side2 && side3)
+                return true;
+            else
+                return false;
+        }
+
+        //POINTS MUST BE COUNTER CLOCKWISE
+        public static bool RectangleContainsPoint(Vertex v1, Vertex v2, Vertex v3, Vertex v4, Vertex point)
+        {
+            bool side1 = IsPointLeftOfLine(v1, v2, point);
+            bool side2 = IsPointLeftOfLine(v2, v3, point);
+            bool side3 = IsPointLeftOfLine(v3, v4, point);
+            bool side4 = IsPointLeftOfLine(v4, v1, point);
+
+            if (side1 && side2 && side3 && side4)
+                return true;
+            else
+                return false;
         }
     }
 }

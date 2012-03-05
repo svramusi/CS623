@@ -116,5 +116,16 @@ namespace StraightSkeletonTests
             v.SetProcessed();
             Assert.IsTrue(v.Processed);
         }
+
+        [Test]
+        public void TestType()
+        {
+            Vertex v = new Vertex(0, 0);
+            Assert.AreEqual(Vertex.VertexType.Undefined, v.Type);
+
+            v.Type = Vertex.VertexType.Split;
+
+            Assert.AreEqual(Vertex.VertexType.Split, v.Type);
+        }
     }
 }

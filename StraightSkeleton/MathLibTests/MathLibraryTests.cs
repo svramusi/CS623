@@ -54,7 +54,7 @@ namespace MathLibTests
         }
 
         [Test]
-        public void TestAngleBisectorPoint()
+        public void TestEdgeAngleBisectorPoint()
         {
             Vertex v1;
             Vertex v2;
@@ -63,6 +63,11 @@ namespace MathLibTests
             v1 = new Vertex(1, 3);
             v2 = new Vertex(1, 1);
             v3 = new Vertex(3, 1);
+
+            //THIS WOULD NORMALLY BE CALCULATED IN A LAV
+            v1.Type = Vertex.VertexType.Edge;
+            v2.Type = Vertex.VertexType.Edge;
+            v3.Type = Vertex.VertexType.Edge;
 
             Vertex bisector = MathLibrary.GetAngleBisectorVertex(v1, v2, v3);
             Assert.AreEqual(1.71, Math.Round(bisector.GetX(), 2));
@@ -73,9 +78,31 @@ namespace MathLibTests
             v2 = new Vertex(5, 3);
             v3 = new Vertex(6.93, 3.52);
 
+            //THIS WOULD NORMALLY BE CALCULATED IN A LAV
+            v1.Type = Vertex.VertexType.Edge;
+            v2.Type = Vertex.VertexType.Edge;
+            v3.Type = Vertex.VertexType.Edge;
+
             bisector = MathLibrary.GetAngleBisectorVertex(v1, v2, v3);
             Assert.AreEqual(5.71, Math.Round(bisector.GetX(), 2));
-            Assert.AreEqual(3.71, Math.Round(bisector.GetY(), 2));           
+            Assert.AreEqual(3.71, Math.Round(bisector.GetY(), 2));
+        }
+
+        [Test]
+        public void TestSplitAngleBisectorPoint()
+        {
+            Vertex v1 = new Vertex(4, 0);
+            Vertex v2 = new Vertex(4, 3);
+            Vertex v3 = new Vertex(8, 3);
+
+            //THIS WOULD NORMALLY BE CALCULATED IN A LAV
+            v1.Type = Vertex.VertexType.Edge;
+            v2.Type = Vertex.VertexType.Split;
+            v3.Type = Vertex.VertexType.Edge;
+
+            Vertex bisector = MathLibrary.GetAngleBisectorVertex(v1, v2, v3);            
+            Assert.AreEqual(3.29, Math.Round(bisector.GetX(), 2));
+            Assert.AreEqual(3.71, Math.Round(bisector.GetY(), 2));
         }
 
         [Test]
@@ -120,6 +147,97 @@ namespace MathLibTests
             intersection = MathLibrary.GetIntersectionPoint(new LineEquation(1.0, 0.0), new LineEquation(1.0, -1.0));
             Assert.IsTrue(double.IsInfinity(intersection.GetX()));
             Assert.IsTrue(double.IsInfinity(intersection.GetY()));
+        }
+
+        [Test]
+        public void TestPointRotation()
+        {
+            Vertex v = MathLibrary.Rotate(new Vertex(1, 2), new Vertex(1, 0), 180);
+            Assert.AreEqual(1, Math.Round(v.GetX()));
+            Assert.AreEqual(4, Math.Round(v.GetY()));
+
+            v = MathLibrary.Rotate(new Vertex(2, 2), new Vertex(4, 0), 180);
+            Assert.AreEqual(0, Math.Round(v.GetX()));
+            Assert.AreEqual(4, Math.Round(v.GetY()));
+
+            v = MathLibrary.Rotate(new Vertex(2, 2), new Vertex(4, 0), -90);
+            Assert.AreEqual(0, Math.Round(v.GetX()));
+            Assert.AreEqual(0, Math.Round(v.GetY()));
+
+            v = MathLibrary.Rotate(new Vertex(2, 2), new Vertex(4, 0), 90);
+            Assert.AreEqual(4, Math.Round(v.GetX()));
+            Assert.AreEqual(4, Math.Round(v.GetY()));
+        }
+
+        [Test]
+        public void TestLeftOfLineHorizontal()
+        {
+            Assert.IsTrue(MathLibrary.IsPointLeftOfLine(new Vertex(0, 0), new Vertex(4, 0), new Vertex(2, 1)));
+            Assert.IsFalse(MathLibrary.IsPointLeftOfLine(new Vertex(0, 0), new Vertex(4, 0), new Vertex(2, -1)));
+        }
+
+        [Test]
+        public void TestLeftOfLinePositive()
+        {
+            Assert.IsTrue(MathLibrary.IsPointLeftOfLine(new Vertex(2, 2), new Vertex(0, 0), new Vertex(2.01, 1))); //FAR RIGHT
+            Assert.IsFalse(MathLibrary.IsPointLeftOfLine(new Vertex(2, 2), new Vertex(0, 0), new Vertex(5, 5)));
+
+            Assert.IsFalse(MathLibrary.IsPointLeftOfLine(new Vertex(2, 2), new Vertex(0, 0), new Vertex(-10, 1))); //FAR LEFT
+            
+            Assert.IsTrue(MathLibrary.IsPointLeftOfLine(new Vertex(2, 2), new Vertex(0, 0), new Vertex(2, 1)));
+            
+            Assert.IsTrue(MathLibrary.IsPointLeftOfLine(new Vertex(2, 2), new Vertex(0, 0), new Vertex(1, .01)));
+            Assert.IsFalse(MathLibrary.IsPointLeftOfLine(new Vertex(2, 2), new Vertex(0, 0), new Vertex(1, 1.5)));
+
+            Assert.IsFalse(MathLibrary.IsPointLeftOfLine(new Vertex(2, 2), new Vertex(0, 0), new Vertex(0, 5)));
+        }
+
+        [Test]
+        public void TestLeftOfLineNegative()
+        {
+            Assert.IsFalse(MathLibrary.IsPointLeftOfLine(new Vertex(4, 0), new Vertex(2, 2), new Vertex(5, 1))); //FAR RIGHT
+
+            Assert.IsTrue(MathLibrary.IsPointLeftOfLine(new Vertex(4, 0), new Vertex(2, 2), new Vertex(1.90, 1))); //FAR LEFT
+
+            Assert.IsTrue(MathLibrary.IsPointLeftOfLine(new Vertex(4, 0), new Vertex(2, 2), new Vertex(2, 1)));
+
+            Assert.IsTrue(MathLibrary.IsPointLeftOfLine(new Vertex(4, 0), new Vertex(2, 2), new Vertex(3, 0.01)));
+            Assert.IsFalse(MathLibrary.IsPointLeftOfLine(new Vertex(4, 0), new Vertex(2, 2), new Vertex(3, 1.5)));
+
+            Assert.IsFalse(MathLibrary.IsPointLeftOfLine(new Vertex(4, 0), new Vertex(2, 2), new Vertex(4, 1)));
+        }
+
+        [Test]
+        public void TestTriangleContainsPoint()
+        {
+            Vertex v1 = new Vertex(0, 0);
+            Vertex v2 = new Vertex(4, 0);
+            Vertex v3 = new Vertex(2, 2);
+
+            Assert.IsTrue(MathLibrary.TriangleContainsPoint(v1, v2, v3, new Vertex(2, 1)));
+
+            Assert.IsFalse(MathLibrary.TriangleContainsPoint(v1, v2, v3, new Vertex(2, 2)));
+            Assert.IsFalse(MathLibrary.TriangleContainsPoint(v1, v2, v3, new Vertex(0, 1)));
+            Assert.IsFalse(MathLibrary.TriangleContainsPoint(v1, v2, v3, new Vertex(2, -1)));
+            Assert.IsFalse(MathLibrary.TriangleContainsPoint(v1, v2, v3, new Vertex(3, 1.5)));
+        }
+
+        [Test]
+        public void TestRectangleContainsPoint()
+        {
+            Vertex v1 = new Vertex(0, 6);
+            Vertex v2 = new Vertex(0, 3);
+            Vertex v3 = new Vertex(8, 3);
+            Vertex v4 = new Vertex(8, 6);
+
+            Assert.IsTrue(MathLibrary.RectangleContainsPoint(v1, v2, v3, v4, new Vertex(4, 4)));
+
+            Assert.IsFalse(MathLibrary.RectangleContainsPoint(v1, v2, v3, v4, new Vertex(8, 3)));
+
+            Assert.IsFalse(MathLibrary.RectangleContainsPoint(v1, v2, v3, v4, new Vertex(-1, 5)));
+            Assert.IsFalse(MathLibrary.RectangleContainsPoint(v1, v2, v3, v4, new Vertex(2, 2)));
+            Assert.IsFalse(MathLibrary.RectangleContainsPoint(v1, v2, v3, v4, new Vertex(9, 4)));
+            Assert.IsFalse(MathLibrary.RectangleContainsPoint(v1, v2, v3, v4, new Vertex(7, 7)));
         }
     }
 }

@@ -42,6 +42,7 @@
     <Compile Include="LAV.cs" />
     <Compile Include="LineSegment.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="SLAV.cs" />
     <Compile Include="SSLOperations.cs" />
     <Compile Include="Vertex.cs" />
   </ItemGroup>

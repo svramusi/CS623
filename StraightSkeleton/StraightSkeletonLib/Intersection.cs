@@ -13,13 +13,17 @@ namespace StraightSkeletonLib
         private Vertex vA;
         private Vertex vB;
 
-        public Intersection(double x, double y, Vertex vA, Vertex vB)
+        private Vertex.VertexType type;
+
+        public Intersection(double x, double y, Vertex vA, Vertex vB, Vertex.VertexType type)
         {
             this.x = x;
             this.y = y;
 
             this.vA = vA;
             this.vB = vB;
+
+            this.type = type;
 
             this.distance = MathLibrary.GetDistanceBetweenLineAndVertex(vA, vB, new Vertex(x, y));
         }
@@ -34,6 +38,11 @@ namespace StraightSkeletonLib
             this.vB = vB;
 
             this.distance = distance;
+        }
+
+        public Vertex.VertexType Type
+        {
+            get { return this.type; }
         }
 
         public double Distance

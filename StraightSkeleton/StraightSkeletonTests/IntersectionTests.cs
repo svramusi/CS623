@@ -15,7 +15,7 @@ namespace StraightSkeletonTests
             Vertex vA = new Vertex(2, 6);
             Vertex vB = new Vertex(2, 2);
 
-            Intersection intersection = new Intersection(4, 4, vA, vB);
+            Intersection intersection = new Intersection(4, 4, vA, vB, Vertex.VertexType.Edge);
 
             Assert.AreEqual(4, intersection.GetX());
             Assert.AreEqual(4, intersection.GetY());
@@ -29,9 +29,16 @@ namespace StraightSkeletonTests
         [Test]
         public void TestEqualIntersections()
         {
-            Intersection intersection1 = new Intersection(4, 4, new Vertex(2, 6), new Vertex(2, 6));
-            Intersection intersection2 = new Intersection(4, 4, new Vertex(2, 6), new Vertex(2, 6));
+            Intersection intersection1 = new Intersection(4, 4, new Vertex(2, 6), new Vertex(2, 6), Vertex.VertexType.Edge);
+            Intersection intersection2 = new Intersection(4, 4, new Vertex(2, 6), new Vertex(2, 6), Vertex.VertexType.Edge);
             Assert.AreEqual(intersection1, intersection2);
+        }
+
+        [Test]
+        public void TestGetType()
+        {
+            Intersection intersection = new Intersection(4, 4, new Vertex(2, 6), new Vertex(2, 6), Vertex.VertexType.Edge);
+            Assert.AreEqual(Vertex.VertexType.Edge, intersection.Type);
         }
     }
 }

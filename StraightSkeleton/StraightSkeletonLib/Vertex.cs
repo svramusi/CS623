@@ -13,6 +13,10 @@ namespace StraightSkeletonLib
         private Vertex nextVertex;
         private Vertex bisectorVertex;
 
+        private VertexType type;
+
+        public enum VertexType { Undefined, Edge, Split };
+
         public Vertex(double x, double y)
         {
             this.x = x;
@@ -23,6 +27,13 @@ namespace StraightSkeletonLib
             this.bisectorVertex = null;
 
             this.processed = false;
+            this.type = VertexType.Undefined;
+        }
+
+        public VertexType Type
+        {
+            set { this.type = value; }
+            get { return this.type; }
         }
 
         public bool Processed

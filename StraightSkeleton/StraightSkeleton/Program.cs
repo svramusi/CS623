@@ -35,29 +35,9 @@ namespace StraightSkeleton
             LAV listOfActiveVertices = new LAV();
             while (reader.IsNotEmpty())
                 listOfActiveVertices.Add(reader.GetCurrentVertex());
-
-
+            
             SSLOperations.ComputeAngleBisectors(listOfActiveVertices);
             List<LineSegment> result = SSLOperations.GenerateSkeleton(listOfActiveVertices);
-            /*
-
-  
-    <x>2</x>
-    <y>6</y>
-  </vertex>
-  <vertex>
-    <x>2</x>
-    <y>2</y>
-  </vertex>
-  <vertex>
-    <x>15</x>
-    <y>2</y>
-  </vertex>
-  <vertex>
-    <x>15</x>
-    <y>6</y>
-  </vertex>
-*/
 
             using (StreamWriter sw = new StreamWriter(output))
             {
@@ -71,9 +51,7 @@ namespace StraightSkeleton
                     sw.WriteLine("\t</linesegment>");
                 }
                 sw.WriteLine("</linesegments>");
-            }
-
-                
+            }                
         }
     }
 }

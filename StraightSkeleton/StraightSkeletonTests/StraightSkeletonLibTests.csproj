@@ -42,6 +42,7 @@
     <Compile Include="IntersectionTests.cs" />
     <Compile Include="LAVTests.cs" />
     <Compile Include="LineSegmentTests.cs" />
+    <Compile Include="SLAVTests.cs" />
     <Compile Include="SSLOperationsTests.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="VertexTests.cs" />
