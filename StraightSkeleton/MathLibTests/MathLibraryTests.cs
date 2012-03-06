@@ -216,10 +216,23 @@ namespace MathLibTests
 
             Assert.IsTrue(MathLibrary.TriangleContainsPoint(v1, v2, v3, new Vertex(2, 1)));
 
-            Assert.IsFalse(MathLibrary.TriangleContainsPoint(v1, v2, v3, new Vertex(2, 2)));
             Assert.IsFalse(MathLibrary.TriangleContainsPoint(v1, v2, v3, new Vertex(0, 1)));
             Assert.IsFalse(MathLibrary.TriangleContainsPoint(v1, v2, v3, new Vertex(2, -1)));
             Assert.IsFalse(MathLibrary.TriangleContainsPoint(v1, v2, v3, new Vertex(3, 1.5)));
+        }
+        
+        [Test]
+        public void TestTriangleContainsPoint2()
+        {
+            Vertex v1 = new Vertex(8, 3);
+            Vertex v2 = new Vertex(0, 3);
+            Vertex v3 = new Vertex(4, 0.859264966048015);
+
+            Assert.IsTrue(MathLibrary.IsPointLeftOfLine(v1, v2, new Vertex(4, 2)));
+            Assert.IsTrue(MathLibrary.IsPointLeftOfLine(v2, v3, new Vertex(4, 2)));
+            Assert.IsTrue(MathLibrary.IsPointLeftOfLine(v3, v1, new Vertex(4, 2)));
+
+            Assert.IsTrue(MathLibrary.TriangleContainsPoint(v1, v2, v3, new Vertex(4, 3)));
         }
 
         [Test]
@@ -238,6 +251,63 @@ namespace MathLibTests
             Assert.IsFalse(MathLibrary.RectangleContainsPoint(v1, v2, v3, v4, new Vertex(2, 2)));
             Assert.IsFalse(MathLibrary.RectangleContainsPoint(v1, v2, v3, v4, new Vertex(9, 4)));
             Assert.IsFalse(MathLibrary.RectangleContainsPoint(v1, v2, v3, v4, new Vertex(7, 7)));
+        }
+
+        [Test]
+        public void TestLeftOfLineInfinityHorizontal()
+        {
+            //LEFT TO RIGHT
+            Assert.IsTrue(MathLibrary.IsPointLeftOfLineToInfinity(new Vertex(4, 0), new Vertex(8, 0), new Vertex(2, 7)));
+            Assert.IsFalse(MathLibrary.IsPointLeftOfLine(new Vertex(4, 0), new Vertex(8, 0), new Vertex(2, -1)));
+
+            //RIGHT TO LEFT
+            Assert.IsTrue(MathLibrary.IsPointLeftOfLineToInfinity(new Vertex(8, 8), new Vertex(0, 8), new Vertex(2, 7)));
+            Assert.IsFalse(MathLibrary.IsPointLeftOfLineToInfinity(new Vertex(8, 8), new Vertex(0, 8), new Vertex(2, 9)));
+        }
+
+        [Test]
+        public void TestLeftOfLineInfinityVertical()
+        {
+            //BOTTOM UP
+            Assert.IsTrue(MathLibrary.IsPointLeftOfLineToInfinity(new Vertex(0, 0), new Vertex(0, 10), new Vertex(-2, 7)));
+            Assert.IsFalse(MathLibrary.IsPointLeftOfLineToInfinity(new Vertex(0, 0), new Vertex(0, 10), new Vertex(0, 7)));
+            Assert.IsFalse(MathLibrary.IsPointLeftOfLineToInfinity(new Vertex(0, 0), new Vertex(0, 10), new Vertex(10, 0)));
+
+            //TOP DOWN
+            Assert.IsTrue(MathLibrary.IsPointLeftOfLineToInfinity(new Vertex(0, 10), new Vertex(0, 0), new Vertex(2, 7)));
+            Assert.IsFalse(MathLibrary.IsPointLeftOfLineToInfinity(new Vertex(0, 10), new Vertex(0, 0), new Vertex(0, 7)));
+            Assert.IsFalse(MathLibrary.IsPointLeftOfLineToInfinity(new Vertex(0, 10), new Vertex(0, 0), new Vertex(-1, -67)));
+        }
+
+        [Test]
+        public void TestLeftOfLineInfinityNegative()
+        {
+            Assert.IsTrue(MathLibrary.IsPointLeftOfLineToInfinity(new Vertex(0, 8), new Vertex(4, 0), new Vertex(2, 7)));
+            Assert.IsFalse(MathLibrary.IsPointLeftOfLineToInfinity(new Vertex(0, 8), new Vertex(4, 0), new Vertex(0, 0)));
+
+            Assert.IsTrue(MathLibrary.IsPointLeftOfLineToInfinity(new Vertex(8, 0), new Vertex(0, 8), new Vertex(0, 0)));
+            Assert.IsFalse(MathLibrary.IsPointLeftOfLineToInfinity(new Vertex(8, 0), new Vertex(0, 8), new Vertex(2, 7)));
+        }
+
+        [Test]
+        public void TestLeftOfLineInfinityPositive()
+        {
+            Assert.IsTrue(MathLibrary.IsPointLeftOfLineToInfinity(new Vertex(0, 0), new Vertex(3, 3), new Vertex(2, 5)));
+            Assert.IsFalse(MathLibrary.IsPointLeftOfLineToInfinity(new Vertex(0, 0), new Vertex(3, 3), new Vertex(10, 6)));
+
+            Assert.IsTrue(MathLibrary.IsPointLeftOfLineToInfinity(new Vertex(3, 3), new Vertex(0, 0), new Vertex(10, 6)));
+            Assert.IsFalse(MathLibrary.IsPointLeftOfLineToInfinity(new Vertex(3, 3), new Vertex(0, 0), new Vertex(2, 5)));
+        }
+
+        [Test]
+        public void TestQuadrilateralContainsPoint()
+        {
+            Vertex v1 = new Vertex(0, 8);
+            Vertex v2 = new Vertex(4, 0);
+            Vertex v3 = new Vertex(8, 0);
+            Vertex v4 = new Vertex(8, 8);
+
+            Assert.IsTrue(MathLibrary.QuadrilateralContainsPoint(v1, v2, v3, v4, new Vertex(2, 7)));
         }
     }
 }

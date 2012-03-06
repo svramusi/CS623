@@ -122,24 +122,48 @@ namespace MathLib
         public static bool IsPointLeftOfLine(Vertex v1, Vertex v2, Vertex point)
         {
             LineEquation lineEquation = GetLineEquation(v1, v2);
+            double lineY = lineEquation.GetY(point.GetX());
+
+            Vertex left = null;
+            Vertex right = null;
+
+            if (v1.GetX() < v2.GetX())
+            {
+                left = v1;
+                right = v2;
+            }
+            else
+            {
+                left = v2;
+                right = v1;
+            }
+            
             if (lineEquation.Slope < 0) //NEGATIVE
             {
-                if (point.GetX() > v1.GetX()) //FAR RIGHT
+                if (point.GetX() > right.GetX()) //FAR RIGHT
                 {
                     return false;
                 }
-                else if (point.GetX() >= v2.GetX() && point.GetX() <= v1.GetX()) //BETWEEN
+                else if (point.GetX() >= left.GetX() && point.GetX() <= right.GetX()) //BETWEEN
                 {
-                    double lineY = lineEquation.GetY(point.GetX());
-
-                    if (point.GetY() >= lineY)
-                        return false;
-                    else
-                        return true;
+                    if (v1.GetX() < v2.GetX()) //LEFT TO RIGHT
+                    {
+                        if (point.GetY() >= lineY)
+                            return true;
+                        else
+                            return false;
+                    }
+                    else //RIGHT TO LEFT
+                    {
+                        if (point.GetY() <= lineY)
+                            return true;
+                        else
+                            return false;
+                    }
                 }
-                else if (point.GetX() < v2.GetX()) // FAR LEFT
+                else if (point.GetX() < left.GetX()) // FAR LEFT
                 {
-                    if (point.GetY() > v1.GetY() && point.GetY() < v2.GetY())
+                    if (point.GetY() > right.GetY() && point.GetY() < left.GetY())
                         return true;
                     else
                         return false;
@@ -149,22 +173,30 @@ namespace MathLib
             }
             else if (lineEquation.Slope > 0) //POSITIVE
             {
-                if (point.GetX() < v2.GetX()) //FAR LEFT
+                if (point.GetX() < left.GetX()) //FAR LEFT
                 {
                     return false;
                 }
-                else if (point.GetX() <= v1.GetX() && point.GetX() >= v2.GetX()) //BETWEEN
+                else if (point.GetX() <= right.GetX() && point.GetX() >= left.GetX()) //BETWEEN
                 {
-                    double lineY = lineEquation.GetY(point.GetX());
-
-                    if (point.GetY() >= lineY)
-                        return false;
-                    else
-                        return true;
+                    if (v2.GetX() < v1.GetX()) //RIGHT TO LEFT
+                    {
+                        if (point.GetY() <= lineY)
+                            return true;
+                        else
+                            return false;
+                    }
+                    else //LEFT TO RIGHT
+                    {
+                        if (point.GetY() >= lineY)
+                            return true;
+                        else
+                            return false;
+                    }
                 }
-                else if (point.GetX() > v1.GetX()) //FAR RIGHT
+                else if (point.GetX() > right.GetX()) //FAR RIGHT
                 {
-                    if (point.GetY() > v2.GetY() && point.GetY() < v1.GetY())
+                    if (point.GetY() > left.GetY() && point.GetY() < right.GetY())
                         return true;
                     else
                         return false;
@@ -195,14 +227,14 @@ namespace MathLib
                 {
                     if (v1.GetX() < v2.GetX()) //LEFT TO RIGHT
                     {
-                        if (point.GetY() > v1.GetY() && point.GetX() > v1.GetX() && point.GetX() < v2.GetX())
+                        if (point.GetY() >= v1.GetY() && point.GetX() > v1.GetX() && point.GetX() < v2.GetX())
                             return true;
                         else
                             return false;
                     }
                     else //RIGHT TO LEFT
                     {
-                        if (point.GetY() < v1.GetY() && point.GetX() < v1.GetX() && point.GetX() > v2.GetX())
+                        if (point.GetY() <= v1.GetY() && point.GetX() < v1.GetX() && point.GetX() > v2.GetX())
                             return true;
                         else
                             return false;
@@ -217,7 +249,7 @@ namespace MathLib
             bool side1 = IsPointLeftOfLine(v1, v2, point);
             bool side2 = IsPointLeftOfLine(v2, v3, point);
             bool side3 = IsPointLeftOfLine(v3, v1, point);
-
+            
             if (side1 && side2 && side3)
                 return true;
             else
@@ -231,6 +263,97 @@ namespace MathLib
             bool side2 = IsPointLeftOfLine(v2, v3, point);
             bool side3 = IsPointLeftOfLine(v3, v4, point);
             bool side4 = IsPointLeftOfLine(v4, v1, point);
+
+            if (side1 && side2 && side3 && side4)
+                return true;
+            else
+                return false;
+        }
+
+        public static bool IsPointLeftOfLineToInfinity(Vertex v1, Vertex v2, Vertex point)
+        {
+            LineEquation lineEquation = GetLineEquation(v1, v2);
+            double lineY = lineEquation.GetY(point.GetX());
+            
+            if (double.IsInfinity(lineEquation.Slope)) //VERTICAL
+            {
+                if (v1.GetY() < v2.GetY()) //BOTTOM UP
+                {
+                    if (point.GetX() < v1.GetX())
+                        return true;
+                    else
+                        return false;
+                }
+                else //TOP DOWN
+                {
+                    if (point.GetX() > v1.GetX())
+                        return true;
+                    else
+                        return false;
+                }
+            }
+            else if (lineEquation.Slope < 0) //NEGATIVE
+            {
+                if (v1.GetX() < v2.GetX())
+                {
+                    if (point.GetY() > lineY)
+                        return true;
+                    else
+                        return false;
+                }
+                else
+                {
+                    if (point.GetY() < lineY)
+                        return true;
+                    else
+                        return false;
+                }
+            }
+            else if (lineEquation.Slope > 0) //POSITIVE
+            {
+                if (v1.GetX() < v2.GetX())
+                {
+                    if (point.GetY() > lineY)
+                        return true;
+                    else
+                        return false;
+                }
+                else
+                {
+                    if (point.GetY() < lineY)
+                        return true;
+                    else
+                        return false;
+                }
+            }
+            else if (lineEquation.Slope == 0)
+            {
+                if (v1.GetX() < v2.GetX()) //LEFT TO RIGHT
+                {
+                    if (point.GetY() > v1.GetY())
+                        return true;
+                    else
+                        return false;
+                }
+                else //RIGHT TO LEFT
+                {
+                    if (point.GetY() < v1.GetY())
+                        return true;
+                    else
+                        return false;
+                }
+            }
+            else
+                return false;
+        }
+
+        //POINTS MUST BE COUNTER CLOCKWISE
+        public static bool QuadrilateralContainsPoint(Vertex v1, Vertex v2, Vertex v3, Vertex v4, Vertex point)
+        {
+            bool side1 = IsPointLeftOfLineToInfinity(v1, v2, point);
+            bool side2 = IsPointLeftOfLineToInfinity(v2, v3, point);
+            bool side3 = IsPointLeftOfLineToInfinity(v3, v4, point);
+            bool side4 = IsPointLeftOfLineToInfinity(v4, v1, point);
 
             if (side1 && side2 && side3 && side4)
                 return true;

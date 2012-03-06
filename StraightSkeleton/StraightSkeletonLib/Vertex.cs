@@ -49,11 +49,13 @@ namespace StraightSkeletonLib
         public double GetX()
         {
             return this.x;
+            //return Math.Round(this.x, 0);
         }
 
         public double GetY()
         {
             return this.y;
+            //return Math.Round(this.y, 0);
         }
 
         public Vertex GetPrevVertex()

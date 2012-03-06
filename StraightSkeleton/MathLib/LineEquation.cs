@@ -27,5 +27,10 @@ namespace MathLib
         {
             return (this.slope * xPoint) + this.yIntercept;
         }
+
+        public double GetX(double yPoint)
+        {
+            return (yPoint - this.yIntercept) / this.slope;
+        }
     }
 }
