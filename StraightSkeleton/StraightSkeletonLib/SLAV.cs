@@ -32,6 +32,11 @@ namespace StraightSkeletonLib
             return list[index];
         }
 
+        public int Count
+        {
+            get { return list.Count; }
+        }
+
         public void BreakAndCreateNew(Vertex v, int lavIndex)
         {
             LAV lav = this.Get(lavIndex);

@@ -12,15 +12,25 @@ namespace StraightSkeletonTests
     public class SSLOperationsTests
     {
         private LAV listOfActiveVertices;
+        private SLAV setListOfActiveVertices;
 
         [SetUp]
         protected void SetUp()
         {
+            setListOfActiveVertices = new SLAV();
+            setListOfActiveVertices.Insert(new Vertex(2, 6), 0);
+            setListOfActiveVertices.Insert(new Vertex(2, 2), 0);
+            setListOfActiveVertices.Insert(new Vertex(15, 2), 0);
+            setListOfActiveVertices.Insert(new Vertex(15, 6), 0);
+
             listOfActiveVertices = new LAV();
             listOfActiveVertices.Add(new Vertex(2, 6));
             listOfActiveVertices.Add(new Vertex(2, 2));
             listOfActiveVertices.Add(new Vertex(15, 2));
             listOfActiveVertices.Add(new Vertex(15, 6));
+
+            SSLOperations.SetVertexType(setListOfActiveVertices.Get(0));
+            SSLOperations.ComputeAngleBisectors(setListOfActiveVertices.Get(0));
 
             SSLOperations.SetVertexType(listOfActiveVertices);
             SSLOperations.ComputeAngleBisectors(listOfActiveVertices);
@@ -132,7 +142,7 @@ namespace StraightSkeletonTests
         [Test]
         public void TestGetResult()
         {
-            List<LineSegment> result = SSLOperations.GenerateSkeleton(listOfActiveVertices);
+            List<LineSegment> result = SSLOperations.GenerateSkeleton(setListOfActiveVertices);
 
             //foreach (LineSegment ls in result)
                 //Console.WriteLine(ls.ToString());
@@ -165,27 +175,27 @@ namespace StraightSkeletonTests
         //        Console.WriteLine(ls.ToString());
         //}
 
-        //[Test]
-        //public void TestGetResult3()
-        //{
+        [Test]
+        public void TestGetResult3()
+        {
 
-        //    System.Diagnostics.Debugger.Break();
+            //System.Diagnostics.Debugger.Break();
 
-        //    LAV listOfActiveVertices3 = new LAV();
-        //    listOfActiveVertices3.Add(new Vertex(0, 6));
-        //    listOfActiveVertices3.Add(new Vertex(0, 0));
-        //    listOfActiveVertices3.Add(new Vertex(4, 0));
-        //    listOfActiveVertices3.Add(new Vertex(4, 3));
-        //    listOfActiveVertices3.Add(new Vertex(8, 0));
-        //    listOfActiveVertices3.Add(new Vertex(8, 6));
+            SLAV slav3 = new SLAV();
+            slav3.Insert(new Vertex(0, 6), 0);
+            slav3.Insert(new Vertex(0, 0), 0);
+            slav3.Insert(new Vertex(4, 0), 0);
+            slav3.Insert(new Vertex(4, 3), 0);
+            slav3.Insert(new Vertex(8, 0), 0);
+            slav3.Insert(new Vertex(8, 6), 0);
+            
+            SSLOperations.ComputeAngleBisectors(slav3.Get(0));
 
-        //    SSLOperations.ComputeAngleBisectors(listOfActiveVertices3);
+            List<LineSegment> result = SSLOperations.GenerateSkeleton(slav3);
 
-        //    List<LineSegment> result = SSLOperations.GenerateSkeleton(listOfActiveVertices3);
-
-        //    foreach (LineSegment ls in result)
-        //        Console.WriteLine(ls.ToString());
-        //}
+            foreach (LineSegment ls in result)
+                Console.WriteLine(ls.ToString());
+        }
 
 
         [Test]

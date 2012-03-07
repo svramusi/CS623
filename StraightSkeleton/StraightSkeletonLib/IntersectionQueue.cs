@@ -347,11 +347,15 @@ namespace StraightSkeletonLib
 
     class Element
     {
+        private static int globalID = 0;
+
         private Intersection intersection;
 
         private Element parent;
         private Element leftE;
         private Element rightE;
+
+        private int ID;
 
         public Element(Intersection intersection, Element parent)
         {
@@ -360,6 +364,10 @@ namespace StraightSkeletonLib
             this.leftE = null;
             this.rightE = null;
             this.parent = parent;
+
+            this.ID = globalID;
+
+            globalID++;
         }
 
         public Intersection Intersection
@@ -409,7 +417,7 @@ namespace StraightSkeletonLib
             if (obj.GetType() != GetType())
                 return false;
 
-            if (this.intersection.Distance == ((Element)obj).intersection.Distance)
+            if(this.ID == ((Element)obj).ID)
                 return true;
             else
                 return false;

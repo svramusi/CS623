@@ -44,6 +44,18 @@ namespace StraightSkeletonTests
         }
 
         [Test]
+        public void TestCount()
+        {
+            SLAV slav = new SLAV();
+
+            slav.Insert(new Vertex(0, 3), 0);
+            slav.Insert(new Vertex(0, 3), 1);
+            slav.Insert(new Vertex(0, 3), 2);
+
+            Assert.AreEqual(3, slav.Count);
+        }
+
+        [Test]
         public void TestBreakAndCreateNew()
         {
             SLAV slav = new SLAV();

@@ -50,12 +50,13 @@ namespace StraightSkeletonLib
             return queue.GetMin();
         }
 
-        public static List<LineSegment> GenerateSkeleton(LAV listOfActiveVertices)
+        public static List<LineSegment> GenerateSkeleton(SLAV setListOfActiveVertices)
         {
             List<LineSegment> result = new List<LineSegment>();
+            //LAV listOfActiveVertices = setListOfActiveVertices.Get(0);
 
             if (queue.IsEmpty())
-                SSLOperations.GeneratePriorityQueue(listOfActiveVertices);
+                SSLOperations.GeneratePriorityQueue(setListOfActiveVertices.Get(0));
             
             while (!queue.IsEmpty())
             {
@@ -76,7 +77,7 @@ namespace StraightSkeletonLib
                             result.Add(new LineSegment(intersection.GetVA().GetX(), intersection.GetVA().GetY(), intersection.GetX(), intersection.GetY()));
 
                             Vertex newVertex = new Vertex(intersection.GetX(), intersection.GetY());
-                            listOfActiveVertices.Insert(newVertex, intersection.GetVB(), intersection.GetVA());
+                            setListOfActiveVertices.Get(0).Insert(newVertex, intersection.GetVB(), intersection.GetVA());
 
                             //Console.WriteLine("\n\nafter insert");
                             //foreach (Vertex v in listOfActiveVertices)
@@ -91,15 +92,15 @@ namespace StraightSkeletonLib
                     intersection.GetVB().SetProcessed();
                 }
 
-                Vertex startVertex = listOfActiveVertices.GetStart();
+                Vertex startVertex = setListOfActiveVertices.Get(0).GetStart();
                 if (startVertex.GetNextVertex().GetNextVertex().Equals(startVertex))
                 {
                     result.Add(new LineSegment(startVertex.GetX(), startVertex.GetY(), startVertex.GetNextVertex().GetX(), startVertex.GetNextVertex().GetY()));
                 }
                 else
                 {
-                    ComputeAngleBisectors(listOfActiveVertices);
-                    SSLOperations.GeneratePriorityQueue(listOfActiveVertices);
+                    ComputeAngleBisectors(setListOfActiveVertices.Get(0));
+                    SSLOperations.GeneratePriorityQueue(setListOfActiveVertices.Get(0));
                 }
             }
 

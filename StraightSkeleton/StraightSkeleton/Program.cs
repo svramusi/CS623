@@ -32,12 +32,14 @@ namespace StraightSkeleton
             if (input.EndsWith(".xml"))
                 reader = new XMLReader(input);
 
-            LAV listOfActiveVertices = new LAV();
+            SLAV slav = new SLAV();
+            //LAV listOfActiveVertices = new LAV();
             while (reader.IsNotEmpty())
-                listOfActiveVertices.Add(reader.GetCurrentVertex());
-            
-            SSLOperations.ComputeAngleBisectors(listOfActiveVertices);
-            List<LineSegment> result = SSLOperations.GenerateSkeleton(listOfActiveVertices);
+                slav.Insert(reader.GetCurrentVertex(), 0);
+
+            SSLOperations.SetVertexType(slav.Get(0));
+            SSLOperations.ComputeAngleBisectors(slav.Get(0));
+            List<LineSegment> result = SSLOperations.GenerateSkeleton(slav);
 
             using (StreamWriter sw = new StreamWriter(output))
             {
