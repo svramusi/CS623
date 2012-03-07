@@ -106,7 +106,7 @@ namespace StraightSkeletonLib
 
             return result;
         }
-
+        
         public static void SetVertexType(LAV listOfActiveVertices)
         {
             Vertex next = null;

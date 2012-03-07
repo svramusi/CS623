@@ -9,6 +9,23 @@ namespace StraightSkeletonTests
     public class VertexTests
     {
         [Test]
+        public void TestDeepCopy()
+        {
+            Vertex v = new Vertex(0, 1);
+            Vertex bisector = new Vertex(100, 100);
+
+            v.SetProcessed();
+            v.Type = Vertex.VertexType.Split;
+            v.AngleBisector = bisector;
+
+            Vertex v2 = new Vertex(v);
+
+            Assert.IsTrue(v2.Processed);
+            Assert.AreEqual(Vertex.VertexType.Split, v2.Type);
+            Assert.AreEqual(bisector, v2.AngleBisector);
+        }
+
+        [Test]
         public void TestIntegerXY()
         {
             Vertex v = new Vertex(0, 1);

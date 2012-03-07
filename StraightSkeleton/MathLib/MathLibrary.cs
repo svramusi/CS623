@@ -137,33 +137,48 @@ namespace MathLib
                 left = v2;
                 right = v1;
             }
+
+            double pointX = Math.Round(point.GetX(), 5);
+            double pointY = Math.Round(point.GetY(), 5);
+
+            double v1X = Math.Round(v1.GetX(), 5);
+            double v1Y = Math.Round(v1.GetY(), 5);
+
+            double v2X = Math.Round(v2.GetX(), 5);
+            double v2Y = Math.Round(v2.GetY(), 5);
+
+            double leftX = Math.Round(left.GetX(), 5);
+            double leftY= Math.Round(left.GetY(), 5);
+
+            double rightX = Math.Round(right.GetX(), 5);
+            double rightY = Math.Round(right.GetY(), 5);
             
             if (lineEquation.Slope < 0) //NEGATIVE
             {
-                if (point.GetX() > right.GetX()) //FAR RIGHT
+                if (pointX > rightX) //FAR RIGHT
                 {
                     return false;
                 }
-                else if (point.GetX() >= left.GetX() && point.GetX() <= right.GetX()) //BETWEEN
+                else if (pointX >= leftX && pointX <= rightX) //BETWEEN
                 {
-                    if (v1.GetX() < v2.GetX()) //LEFT TO RIGHT
+                    if (v1X < v2X) //LEFT TO RIGHT
                     {
-                        if (point.GetY() >= lineY)
+                        if (pointY >= lineY)
                             return true;
                         else
                             return false;
                     }
                     else //RIGHT TO LEFT
                     {
-                        if (point.GetY() <= lineY)
+                        if (pointY <= lineY)
                             return true;
                         else
                             return false;
                     }
                 }
-                else if (point.GetX() < left.GetX()) // FAR LEFT
+                else if (pointX < leftX) // FAR LEFT
                 {
-                    if (point.GetY() > right.GetY() && point.GetY() < left.GetY())
+                    if (pointY > rightY && pointY < leftY)
                         return true;
                     else
                         return false;
@@ -173,30 +188,30 @@ namespace MathLib
             }
             else if (lineEquation.Slope > 0) //POSITIVE
             {
-                if (point.GetX() < left.GetX()) //FAR LEFT
+                if (pointX < leftX) //FAR LEFT
                 {
                     return false;
                 }
-                else if (point.GetX() <= right.GetX() && point.GetX() >= left.GetX()) //BETWEEN
+                else if (pointX <= rightX && pointX >= leftX) //BETWEEN
                 {
-                    if (v2.GetX() < v1.GetX()) //RIGHT TO LEFT
+                    if (v2X < v1X) //RIGHT TO LEFT
                     {
-                        if (point.GetY() <= lineY)
+                        if (pointY <= lineY)
                             return true;
                         else
                             return false;
                     }
                     else //LEFT TO RIGHT
                     {
-                        if (point.GetY() >= lineY)
+                        if (pointY >= lineY)
                             return true;
                         else
                             return false;
                     }
                 }
-                else if (point.GetX() > right.GetX()) //FAR RIGHT
+                else if (pointX > rightX) //FAR RIGHT
                 {
-                    if (point.GetY() > left.GetY() && point.GetY() < right.GetY())
+                    if (pointY > leftY && pointY < rightY)
                         return true;
                     else
                         return false;
@@ -206,18 +221,18 @@ namespace MathLib
             }
             else //HORIZONTAL OR VERTICAL
             {
-                if (v1.GetX() == v2.GetX()) //VERTICAL
+                if (v1X == v2X) //VERTICAL
                 {
-                    if (v2.GetY() > v1.GetY()) //GOING UP
+                    if (v2Y > v1Y) //GOING UP
                     {
-                        if (point.GetX() < v1.GetX() && point.GetY() > v1.GetY() && point.GetY() < v2.GetY())
+                        if (pointX < v1X && pointY > v1Y && pointY < v2Y)
                             return true;
                         else
                             return false;
                     }
                     else //GOING DOWN
                     {
-                        if (point.GetX() > v1.GetY() && point.GetY() < v1.GetY() && point.GetY() > v2.GetY())
+                        if (pointX > v1Y && pointY < v1Y && pointY > v2Y)
                             return true;
                         else
                             return false;
@@ -225,16 +240,16 @@ namespace MathLib
                 }
                 else //HORIZONTAL
                 {
-                    if (v1.GetX() < v2.GetX()) //LEFT TO RIGHT
+                    if (v1X < v2X) //LEFT TO RIGHT
                     {
-                        if (point.GetY() >= v1.GetY() && point.GetX() > v1.GetX() && point.GetX() < v2.GetX())
+                        if (pointY >= v1Y && pointX > v1X && pointX < v2X)
                             return true;
                         else
                             return false;
                     }
                     else //RIGHT TO LEFT
                     {
-                        if (point.GetY() <= v1.GetY() && point.GetX() < v1.GetX() && point.GetX() > v2.GetX())
+                        if (pointY <= v1Y && pointX < v1X && pointX > v2X)
                             return true;
                         else
                             return false;

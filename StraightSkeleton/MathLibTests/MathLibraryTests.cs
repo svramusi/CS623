@@ -308,6 +308,18 @@ namespace MathLibTests
             Vertex v4 = new Vertex(8, 8);
 
             Assert.IsTrue(MathLibrary.QuadrilateralContainsPoint(v1, v2, v3, v4, new Vertex(2, 7)));
+
+        }
+            
+        [Test]
+        public void TestQuadrilateralContainsPoint2()
+        {
+            Vertex v1 = new Vertex(4, 2);
+            Vertex v2 = new Vertex(6, 2);
+            Vertex v3 = new Vertex(15.69, 34.02);
+            Vertex v4 = new Vertex(-9.26, 34.02);
+
+            Assert.IsTrue(MathLibrary.QuadrilateralContainsPoint(v1, v2, v3, v4, new Vertex(3.5, 4)));
         }
     }
 }

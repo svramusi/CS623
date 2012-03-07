@@ -30,6 +30,19 @@ namespace StraightSkeletonLib
             this.type = VertexType.Undefined;
         }
 
+        public Vertex(Vertex v)
+        {
+            this.x = v.GetX();
+            this.y = v.GetY();
+
+            this.prevVertex = null;
+            this.nextVertex = null;
+
+            this.bisectorVertex = v.bisectorVertex;
+            this.processed = v.Processed;
+            this.type = v.Type;
+        }
+
         public VertexType Type
         {
             set { this.type = value; }
@@ -49,13 +62,11 @@ namespace StraightSkeletonLib
         public double GetX()
         {
             return this.x;
-            //return Math.Round(this.x, 0);
         }
 
         public double GetY()
         {
             return this.y;
-            //return Math.Round(this.y, 0);
         }
 
         public Vertex GetPrevVertex()
