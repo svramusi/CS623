@@ -98,7 +98,7 @@ namespace StraightSkeletonLib
 
                         Vertex intersectionVertex = new Vertex(intersectionX, intersectionY);
 
-                        if (intersection.Type == Vertex.VertexType.Edge)
+                        if (intersection.Type == Vertex.VertexType.Edge || intersection.Type == Vertex.VertexType.Split)
                         {
                             result.Add(new LineSegment(intersection.GetVB(), intersectionVertex));
                             result.Add(new LineSegment(intersection.GetVA(), intersectionVertex));
@@ -113,10 +113,12 @@ namespace StraightSkeletonLib
                                 intersectionVertex.AngleBisector = MathLibrary.Rotate(intersectionVertex, MathLibrary.GetAngleBisectorVertex(new LineSegment(intersectionVertex, intersection.GetVB()), new LineSegment(intersectionVertex, intersection.GetVA())), 180);
                             }
                         }
+                            /*
                         else if (intersection.Type == Vertex.VertexType.Split)
                         {
                             result.Add(new LineSegment(intersection.GetVB(), intersectionVertex));
                         }
+                             * */
 
                         intersection.GetVA().SetProcessed();
                         intersection.GetVB().SetProcessed();
