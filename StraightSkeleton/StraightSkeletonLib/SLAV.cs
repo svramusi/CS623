@@ -117,7 +117,7 @@ namespace StraightSkeletonLib
 
 
                         SSLOperations.SetVertexType(newVertex1);
-                        newVertex1.AngleBisector = MathLibrary.GetAngleBisectorVertex(newVertex1.GetPrevLineSegment(), newVertex1.GetNextLineSegment());
+                        newVertex1.AngleBisector = MathLibrary.GetAngleBisectorVertex(newVertex1.PrevLineSegment, newVertex1.NextLineSegment);
 
 
 
@@ -130,7 +130,7 @@ namespace StraightSkeletonLib
 
 
                         SSLOperations.SetVertexType(newVertex2);
-                        newVertex2.AngleBisector = MathLibrary.GetAngleBisectorVertex(newVertex2.GetPrevLineSegment(), newVertex2.GetNextLineSegment());
+                        newVertex2.AngleBisector = MathLibrary.GetAngleBisectorVertex(newVertex2.PrevLineSegment, newVertex2.NextLineSegment);
 
 
                         //CREATE NEW LAV
@@ -169,7 +169,7 @@ namespace StraightSkeletonLib
                                 matchVertex.GetPrevVertex().SetNextVertex(newVertex);
 
                                 SSLOperations.SetVertexType(newVertex);
-                                newVertex.AngleBisector = MathLibrary.GetAngleBisectorVertex(newVertex.GetPrevLineSegment(), newVertex.GetNextLineSegment());
+                                newVertex.AngleBisector = MathLibrary.GetAngleBisectorVertex(newVertex.PrevLineSegment, newVertex.NextLineSegment);
                                 
                                 this.Insert(newVertex, lavIndex + 1);
 

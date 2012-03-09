@@ -99,14 +99,16 @@ namespace StraightSkeletonLib
             this.prevLS = new LineSegment(v, this);
         }
 
-        public LineSegment GetPrevLineSegment()
+        public LineSegment PrevLineSegment
         {
-            return this.prevLS;
+            get { return this.prevLS; }
+            set { this.prevLS = value; }
         }
 
-        public LineSegment GetNextLineSegment()
+        public LineSegment NextLineSegment
         {
-            return this.nextLS;
+            get { return this.nextLS; }
+            set { this.nextLS = value; }                 
         }
 
         public override bool Equals(object obj)

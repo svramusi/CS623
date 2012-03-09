@@ -181,11 +181,11 @@ namespace StraightSkeletonTests
             slav3.Insert(new Vertex(4, 3), 0);
             slav3.Insert(new Vertex(8, 3), 0);
             slav3.Insert(new Vertex(8, 6), 0);
-            
+
             SSLOperations.ComputeAngleBisectors(slav3.Get(0));
 
             List<LineSegment> result = SSLOperations.GenerateSkeleton(slav3);
-            
+
             Assert.AreEqual(new LineSegment(new Vertex(8, 3), new Vertex(6.5, 4.5)), result[0]);
             Assert.AreEqual(new LineSegment(new Vertex(8, 6), new Vertex(6.5, 4.5)), result[1]);
             Assert.AreEqual(new LineSegment(new Vertex(0, 0), new Vertex(2, 2)), result[2]);
@@ -196,7 +196,29 @@ namespace StraightSkeletonTests
             Assert.AreEqual(new LineSegment(new Vertex(6.5, 4.5), new Vertex(2.5, 4.5)), result[7]);
             Assert.AreEqual(new LineSegment(new Vertex(2, 4), new Vertex(2.5, 4.5)), result[8]);
         }
+        
+        [Test]
+        public void TestGetResult4()
+        {
+            SLAV slav4 = new SLAV();
+            slav4.Insert(new Vertex(0, 3), 0);
+            slav4.Insert(new Vertex(2, 0), 0);
+            slav4.Insert(new Vertex(4, 1), 0);
+            slav4.Insert(new Vertex(6, 0), 0);
+            slav4.Insert(new Vertex(8, 3), 0);
 
+            SSLOperations.ComputeAngleBisectors(slav4.Get(0));
+
+            List<LineSegment> result = SSLOperations.GenerateSkeleton(slav4);
+
+            Assert.AreEqual(new LineSegment(new Vertex(6, 0), new Vertex(5.55, 1.69)), result[0]);
+            Assert.AreEqual(new LineSegment(new Vertex(8, 3), new Vertex(5.55, 1.69)), result[1]);
+            Assert.AreEqual(new LineSegment(new Vertex(0, 3), new Vertex(2.45, 1.69)), result[2]);
+            Assert.AreEqual(new LineSegment(new Vertex(2, 0), new Vertex(2.45, 1.69)), result[3]);
+            Assert.AreEqual(new LineSegment(new Vertex(5.55, 1.69), new Vertex(4, 2.06)), result[4]);
+            Assert.AreEqual(new LineSegment(new Vertex(2.45, 1.69), new Vertex(4, 2.06)), result[5]);
+            Assert.AreEqual(new LineSegment(new Vertex(4, 1), new Vertex(4, 2.06)), result[6]);
+        }
 
         [Test]
         public void TestVertexType()

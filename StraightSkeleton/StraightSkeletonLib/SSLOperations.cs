@@ -11,7 +11,7 @@ namespace StraightSkeletonLib
         {
             foreach (Vertex v in listOfActiveVertices)
             {
-                v.AngleBisector = MathLibrary.GetAngleBisectorVertex(v.GetPrevLineSegment(), v.GetNextLineSegment());
+                v.AngleBisector = MathLibrary.GetAngleBisectorVertex(v.PrevLineSegment, v.NextLineSegment);
 
                 if (v.AngleBisector == null)
                 {
@@ -44,7 +44,7 @@ namespace StraightSkeletonLib
                 else
                     type = Vertex.VertexType.Edge;
 
-                Intersection i = new Intersection(nextIntersection.GetX(), nextIntersection.GetY(), next, v, type, next.GetNextLineSegment(), v.GetPrevLineSegment());
+                Intersection i = new Intersection(nextIntersection.GetX(), nextIntersection.GetY(), next, v, type, next.NextLineSegment, v.PrevLineSegment);
                 //Console.WriteLine("i'm " + v.ToString() + " and my cloests intersection is x: " + i.GetX() + " y: " + i.GetY() + " distance: " + i.Distance);
                 return i;
             }
@@ -55,7 +55,7 @@ namespace StraightSkeletonLib
                 else
                     type = Vertex.VertexType.Edge;
 
-                Intersection i = new Intersection(prevIntersection.GetX(), prevIntersection.GetY(), v, prev, type, prev.GetPrevLineSegment(), v.GetNextLineSegment());
+                Intersection i = new Intersection(prevIntersection.GetX(), prevIntersection.GetY(), v, prev, type, prev.PrevLineSegment, v.NextLineSegment);
                 //Console.WriteLine("i'm " + v.ToString() + " and my cloests intersection is x: " + i.GetX() + " y: " + i.GetY() + " distance: " + i.Distance);
                 return i;
             }
@@ -105,8 +105,11 @@ namespace StraightSkeletonLib
 
                             setListOfActiveVertices.Get(lavIndex).Insert(intersectionVertex, intersection.GetVB(), intersection.GetVA());
 
+                            intersectionVertex.NextLineSegment = intersection.GetLSVA();
+                            intersectionVertex.PrevLineSegment = intersection.GetLSVB();
+
                             SetVertexType(intersectionVertex);
-                            intersectionVertex.AngleBisector = MathLibrary.GetAngleBisectorVertex(intersection.GetVB().GetPrevLineSegment(), intersection.GetVA().GetNextLineSegment());
+                            intersectionVertex.AngleBisector = MathLibrary.GetAngleBisectorVertex(intersectionVertex.PrevLineSegment, intersectionVertex.NextLineSegment);
 
                             if (intersectionVertex.AngleBisector == null) //THE LINES ARE PARALLEL
                             {
