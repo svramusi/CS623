@@ -45,7 +45,6 @@ namespace StraightSkeletonLib
                     type = Vertex.VertexType.Edge;
 
                 Intersection i = new Intersection(nextIntersection.GetX(), nextIntersection.GetY(), next, v, type, next.NextLineSegment, v.PrevLineSegment);
-                //Console.WriteLine("i'm " + v.ToString() + " and my cloests intersection is x: " + i.GetX() + " y: " + i.GetY() + " distance: " + i.Distance);
                 return i;
             }
             else
@@ -56,7 +55,6 @@ namespace StraightSkeletonLib
                     type = Vertex.VertexType.Edge;
 
                 Intersection i = new Intersection(prevIntersection.GetX(), prevIntersection.GetY(), v, prev, type, prev.PrevLineSegment, v.NextLineSegment);
-                //Console.WriteLine("i'm " + v.ToString() + " and my cloests intersection is x: " + i.GetX() + " y: " + i.GetY() + " distance: " + i.Distance);
                 return i;
             }
         }
@@ -116,12 +114,6 @@ namespace StraightSkeletonLib
                                 intersectionVertex.AngleBisector = MathLibrary.Rotate(intersectionVertex, MathLibrary.GetAngleBisectorVertex(new LineSegment(intersectionVertex, intersection.GetVB()), new LineSegment(intersectionVertex, intersection.GetVA())), 180);
                             }
                         }
-                            /*
-                        else if (intersection.Type == Vertex.VertexType.Split)
-                        {
-                            result.Add(new LineSegment(intersection.GetVB(), intersectionVertex));
-                        }
-                             * */
 
                         intersection.GetVA().SetProcessed();
                         intersection.GetVB().SetProcessed();
@@ -138,89 +130,6 @@ namespace StraightSkeletonLib
                     SSLOperations.GeneratePriorityQueue(setListOfActiveVertices.Get(lavIndex));
                 }
             }
-
-
-            /*
-            int lavIndex = 0;
-
-            while (lavIndex < setListOfActiveVertices.Count)
-            {
-
-                if (queue.IsEmpty())
-                    SSLOperations.GeneratePriorityQueue(setListOfActiveVertices.Get(lavIndex));
-
-                /-*
-                foreach (Vertex v in setListOfActiveVertices.Get(lavIndex))
-                {
-                    if (v.Type == Vertex.VertexType.Split)
-                        setListOfActiveVertices.BreakAndCreateNew(v, lavIndex);
-                }
-                 * *-/
-
-                while (!queue.IsEmpty())
-                {
-                    while (!queue.IsEmpty())
-                    {
-                        Intersection intersection = GetMinIntersection();
-
-                        if (intersection.Type == Vertex.VertexType.Undefined)
-                        {
-                            throw new Exception("Undefined vertex type.");
-                        }
-
-                        
-                        if(intersection.Type == Vertex.VertexType.Split)
-                        {
-                            if (intersection.GetVA().Type == Vertex.VertexType.Split)
-                            {
-                                setListOfActiveVertices.BreakAndCreateNew(intersection.GetVA(), lavIndex);
-                            }
-                            else if (intersection.GetVB().Type == Vertex.VertexType.Split)
-                            {
-                                setListOfActiveVertices.BreakAndCreateNew(intersection.GetVB(), lavIndex);
-                            }
-                        }
-                        
-
-                        if (!intersection.GetVA().Processed && !intersection.GetVB().Processed)
-                        {
-                            if (intersection.Type == Vertex.VertexType.Edge)
-                            {
-                                result.Add(new LineSegment(intersection.GetVB().GetX(), intersection.GetVB().GetY(), intersection.GetX(), intersection.GetY()));
-                                result.Add(new LineSegment(intersection.GetVA().GetX(), intersection.GetVA().GetY(), intersection.GetX(), intersection.GetY()));
-
-                                Vertex newVertex = new Vertex(intersection.GetX(), intersection.GetY());
-                                setListOfActiveVertices.Get(lavIndex).Insert(newVertex, intersection.GetVB(), intersection.GetVA());
-
-                                SetVertexType(newVertex);
-                                newVertex.AngleBisector = MathLibrary.GetAngleBisectorVertex(newVertex.GetPrevVertex(), newVertex, newVertex.GetNextVertex());
-
-                                //Console.WriteLine("\n\nafter insert");
-                                //foreach (Vertex v in listOfActiveVertices)
-                                //    Console.WriteLine(v.ToString());
-                            }
-
-                            intersection.GetVA().SetProcessed();
-                            intersection.GetVB().SetProcessed();
-                        }
-
-                    }
-
-                    Vertex startVertex = setListOfActiveVertices.Get(lavIndex).GetStart();
-                    if (startVertex.GetNextVertex().GetNextVertex().Equals(startVertex))
-                    {
-                        result.Add(new LineSegment(startVertex.GetX(), startVertex.GetY(), startVertex.GetNextVertex().GetX(), startVertex.GetNextVertex().GetY()));
-                    }
-                    else
-                    {
-                        SSLOperations.GeneratePriorityQueue(setListOfActiveVertices.Get(lavIndex));
-                    }
-                }
-
-                lavIndex++;
-            }
-
-            */
 
             return result;
         }

@@ -40,19 +40,12 @@ namespace StraightSkeletonLib
 
         public static Vertex GetAngleBisectorVertex(LineSegment ls1, LineSegment ls2)
         {
-            //if (ls1.Start.Type == Vertex.VertexType.Undefined || ls1.End.Type == Vertex.VertexType.Undefined || ls2.Start.Type == Vertex.VertexType.Undefined || ls2.Start.Type == Vertex.VertexType.Undefined)
-                //throw new Exception("Undefined vertex type.");
-
             Vertex intersection = GetIntersectionPoint(ls1, ls2);
 
             //THE LINES ARE PARALLEL
             if (double.IsInfinity(intersection.GetX()) || double.IsNaN(intersection.GetX()) || double.IsInfinity(intersection.GetY()) || double.IsNaN(intersection.GetY()))
                 return null;
-
-            //ls1 = prev
-            //ls2 = next
-            //intersection = current
-
+            
             Vertex maxLine1;
             Vertex maxLine2;
 
@@ -89,46 +82,8 @@ namespace StraightSkeletonLib
 
             Vertex bisectorVertex = new Vertex(bisectorX, bisectorY);
             
-            //TAKE CARE OF THIS LATER -- THERE IS NO WAY TO DETERMINE SPLITS BASED ON LINE SEGMENTS
-            //if (current.Type == Vertex.VertexType.Split)
-                //bisectorVertex = Rotate(current, bisectorVertex, 180);
-
             return bisectorVertex;
-        }
-
-        /*
-        public static Vertex GetAngleBisectorVertex(Vertex prev, Vertex current, Vertex next)
-        {
-            if (current.Type == Vertex.VertexType.Undefined)
-                throw new Exception("Undefined vertex type.");
-
-            double bisectorX = 0;
-            double bisectorY = 0;
-
-            double distance12 = GetDistanceBetweenVertices(prev, current);
-            double distance32 = GetDistanceBetweenVertices(next, current);
-
-            bisectorX = (prev.GetX() - current.GetX()) / distance12;
-            bisectorY = (prev.GetY() - current.GetY()) / distance12;
-
-            bisectorX = bisectorX + ((next.GetX() - current.GetX()) / distance32);
-            bisectorY = bisectorY + ((next.GetY() - current.GetY()) / distance32);
-
-            bisectorX = bisectorX * 0.5;
-            bisectorY = bisectorY * 0.5;
-
-            double distance = GetDistanceOfVertex(bisectorX, bisectorY);
-
-            bisectorX = current.GetX() + (bisectorX / distance);
-            bisectorY = current.GetY() + (bisectorY / distance);
-
-            Vertex bisectorVertex = new Vertex(bisectorX, bisectorY);            
-            if (current.Type == Vertex.VertexType.Split)
-                bisectorVertex = Rotate(current, bisectorVertex, 180);
-
-            return bisectorVertex;
-        }
-        */        
+        } 
 
         public static LineEquation GetLineEquation(Vertex v1, Vertex v2)
         {

@@ -56,8 +56,6 @@ namespace StraightSkeletonLib
                     (currentVertex.GetX() > nextVertex.GetX() && (intersection.GetY() > currentVertex.GetY() && intersection.GetY() > nextVertex.GetY())) ||
                     double.IsInfinity(intersection.GetX()))
                 {
-                    //Console.WriteLine("rect - current: " + currentVertex);
-
                     double distanceCurrent = MathLibrary.GetDistanceBetweenVertices(currentVertex, v);
                     double distanceNext = MathLibrary.GetDistanceBetweenVertices(nextVertex, v);
 
@@ -74,9 +72,7 @@ namespace StraightSkeletonLib
                     Vertex rectNext = new Vertex(line2.GetX(maxDistance + nextVertex.GetY()), maxDistance + nextVertex.GetY());
                     
                     if (MathLibrary.QuadrilateralContainsPoint(currentVertex, nextVertex, rectNext, rectCurrent, v))
-                    {
-                        //Console.WriteLine("i'm " + currentVertex + " and my rect contains point: " + v);
-                        
+                    {                        
                         Vertex splitVertex = null;
                         Vertex referenceVertex = null;
                         Vertex counterVertex = lav.GetStart();
@@ -134,12 +130,10 @@ namespace StraightSkeletonLib
 
 
                         //CREATE NEW LAV
-                        //Console.WriteLine("adding : " + newVertex2 + " to " + (lavIndex + 1));
                         this.Insert(newVertex2, lavIndex + 1);
                         Vertex counterVertex2 = newVertex2.GetNextVertex();
                         while (!counterVertex2.Equals(newVertex2))
                         {
-                            //Console.WriteLine("adding : " + counterVertex2 + " to " + (lavIndex + 1));
                             this.Insert(counterVertex2, lavIndex + 1);
                             counterVertex2 = counterVertex2.GetNextVertex();
                         }
