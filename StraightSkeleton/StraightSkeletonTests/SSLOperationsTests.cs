@@ -142,10 +142,7 @@ namespace StraightSkeletonTests
         public void TestGetResult()
         {
             List<LineSegment> result = SSLOperations.GenerateSkeleton(setListOfActiveVertices);
-
-            //foreach (LineSegment ls in result)
-                //Console.WriteLine(ls.ToString());
-
+            
             Assert.AreEqual(new LineSegment(new Vertex(2, 6), new Vertex(4, 4)), result[0]);
             Assert.AreEqual(new LineSegment(new Vertex(2, 2), new Vertex(4, 4)), result[1]);
             Assert.AreEqual(new LineSegment(new Vertex(15, 2), new Vertex(13, 4)), result[2]);
@@ -153,47 +150,51 @@ namespace StraightSkeletonTests
             Assert.AreEqual(new LineSegment(new Vertex(4, 4), new Vertex(13, 4)), result[4]);
         }
 
-        //[Test]
-        //public void TestGetResult2()
-        //{
-        //    LAV listOfActiveVertices2 = new LAV();
-        //    listOfActiveVertices2.Add(new Vertex(3, 11));
-        //    listOfActiveVertices2.Add(new Vertex(0, 7));
-        //    listOfActiveVertices2.Add(new Vertex(0, 3));
-        //    listOfActiveVertices2.Add(new Vertex(3, 0));
-        //    listOfActiveVertices2.Add(new Vertex(7, 0));
-        //    listOfActiveVertices2.Add(new Vertex(10, 3));
-        //    listOfActiveVertices2.Add(new Vertex(10, 7));
-        //    listOfActiveVertices2.Add(new Vertex(7, 11));
+        [Test]
+        public void TestGetResult2()
+        {
+            SLAV slav2 = new SLAV();
+            slav2.Insert(new Vertex(3, 10), 0);
+            slav2.Insert(new Vertex(0, 7), 0);
+            slav2.Insert(new Vertex(0, 3), 0);
+            slav2.Insert(new Vertex(3, 0), 0);
+            slav2.Insert(new Vertex(7, 0), 0);
+            slav2.Insert(new Vertex(10, 3), 0);
+            slav2.Insert(new Vertex(10, 7), 0);
+            slav2.Insert(new Vertex(7, 10), 0);
 
-        //    SSLOperations.ComputeAngleBisectors(listOfActiveVertices2);
+            SSLOperations.ComputeAngleBisectors(slav2.Get(0));
 
-        //    List<LineSegment> result = SSLOperations.GenerateSkeleton(listOfActiveVertices2);
+            List<LineSegment> result = SSLOperations.GenerateSkeleton(slav2);
 
-        //    foreach (LineSegment ls in result)
-        //        Console.WriteLine(ls.ToString());
-        //}
+            foreach (LineSegment ls in result)
+                Console.WriteLine(ls.ToString());
+        }
 
         [Test]
         public void TestGetResult3()
         {
-
-            //System.Diagnostics.Debugger.Break();
-
             SLAV slav3 = new SLAV();
             slav3.Insert(new Vertex(0, 6), 0);
             slav3.Insert(new Vertex(0, 0), 0);
             slav3.Insert(new Vertex(4, 0), 0);
             slav3.Insert(new Vertex(4, 3), 0);
-            slav3.Insert(new Vertex(8, 0), 0);
+            slav3.Insert(new Vertex(8, 3), 0);
             slav3.Insert(new Vertex(8, 6), 0);
             
             SSLOperations.ComputeAngleBisectors(slav3.Get(0));
 
             List<LineSegment> result = SSLOperations.GenerateSkeleton(slav3);
-
-            foreach (LineSegment ls in result)
-                Console.WriteLine(ls.ToString());
+            
+            Assert.AreEqual(new LineSegment(new Vertex(8, 3), new Vertex(6.5, 4.5)), result[0]);
+            Assert.AreEqual(new LineSegment(new Vertex(8, 6), new Vertex(6.5, 4.5)), result[1]);
+            Assert.AreEqual(new LineSegment(new Vertex(0, 0), new Vertex(2, 2)), result[2]);
+            Assert.AreEqual(new LineSegment(new Vertex(4, 0), new Vertex(2, 2)), result[3]);
+            Assert.AreEqual(new LineSegment(new Vertex(0, 6), new Vertex(2, 4)), result[4]);
+            Assert.AreEqual(new LineSegment(new Vertex(2, 2), new Vertex(2, 4)), result[5]);
+            Assert.AreEqual(new LineSegment(new Vertex(4, 3), new Vertex(2.5, 4.5)), result[6]);
+            Assert.AreEqual(new LineSegment(new Vertex(6.5, 4.5), new Vertex(2.5, 4.5)), result[7]);
+            Assert.AreEqual(new LineSegment(new Vertex(2, 4), new Vertex(2.5, 4.5)), result[8]);
         }
 
 
