@@ -13,6 +13,9 @@ namespace StraightSkeletonLib
         private Vertex nextVertex;
         private Vertex bisectorVertex;
 
+        private LineSegment prevLS;
+        private LineSegment nextLS;
+
         private VertexType type;
 
         public enum VertexType { Undefined, Edge, Split };
@@ -25,6 +28,9 @@ namespace StraightSkeletonLib
             this.prevVertex = null;
             this.nextVertex = null;
             this.bisectorVertex = null;
+
+            this.prevLS = null;
+            this.nextLS = null;                 
 
             this.processed = false;
             this.type = VertexType.Undefined;
@@ -82,11 +88,25 @@ namespace StraightSkeletonLib
         public void SetNextVertex(Vertex v)
         {
             this.nextVertex = v;
+
+            this.nextLS = new LineSegment(this, v);
         }
 
         public void SetPrevVertex(Vertex v)
         {
             this.prevVertex = v;
+
+            this.prevLS = new LineSegment(v, this);
+        }
+
+        public LineSegment GetPrevLineSegment()
+        {
+            return this.prevLS;
+        }
+
+        public LineSegment GetNextLineSegment()
+        {
+            return this.nextLS;
         }
 
         public override bool Equals(object obj)

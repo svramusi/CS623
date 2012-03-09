@@ -48,8 +48,8 @@ namespace StraightSkeleton
                 foreach (LineSegment ls in result)
                 {
                     sw.WriteLine("\t<linesegment>");
-                    sw.WriteLine("\t\t<x>" + ls.Start.X + "</x><y>" + ls.Start.Y + "</y>");
-                    sw.WriteLine("\t\t<x>" + ls.End.X + "</x><y>" + ls.End.Y + "</y>");
+                    sw.WriteLine("\t\t<x>" + ls.Start.GetX() + "</x><y>" + ls.Start.GetY() + "</y>");
+                    sw.WriteLine("\t\t<x>" + ls.End.GetX() + "</x><y>" + ls.End.GetY() + "</y>");
                     sw.WriteLine("\t</linesegment>");
                 }
                 sw.WriteLine("</linesegments>");

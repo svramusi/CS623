@@ -4,21 +4,21 @@ namespace StraightSkeletonLib
 {
     public class LineSegment
     {
-        private Point start;
-        private Point end;
+        private Vertex start;
+        private Vertex end;
 
-        public LineSegment(double x1, double y1, double x2, double y2)
+        public LineSegment(Vertex start, Vertex end)
         {
-            this.start = new Point(x1, y1);
-            this.end = new Point(x2, y2);
+            this.start = start;
+            this.end = end;
         }
 
-        public Point Start
+        public Vertex Start
         {
             get { return this.start; }
         }
 
-        public Point End
+        public Vertex End
         {
             get { return this.end; }
         }
@@ -41,47 +41,8 @@ namespace StraightSkeletonLib
 
         public override string ToString()
         {
-            return "Start: x: " + Start.X.ToString() + " y: " + Start.Y.ToString() + " End: x: " + End.X.ToString() + " y: " + End.Y.ToString();
+            return "Start: x: " + Start.GetX().ToString() + " y: " + Start.GetY().ToString() + " End: x: " + End.GetX().ToString() + " y: " + End.GetY().ToString();
         }
 
-    }
-
-    public class Point
-    {
-        private double x;
-        private double y;
-
-        public Point(double x, double y)
-        {
-            this.x = x;
-            this.y = y;
-        }
-
-        public double X
-        {
-            get { return this.x; }
-        }
-
-        public double Y
-        {
-            get { return this.y; }
-        }
-
-
-        public override bool Equals(object obj)
-        {
-            if (obj == null)
-                return false;
-
-            if (obj.GetType() != GetType())
-                return false;
-
-            Point comp = (Point)obj;
-
-            if(Math.Round(this.X) == Math.Round(comp.X) && Math.Round(this.Y) == Math.Round(comp.Y))
-                return true;
-            else
-                return false;
-        }
     }
 }

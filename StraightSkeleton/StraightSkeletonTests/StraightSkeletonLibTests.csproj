@@ -42,16 +42,13 @@
     <Compile Include="IntersectionTests.cs" />
     <Compile Include="LAVTests.cs" />
     <Compile Include="LineSegmentTests.cs" />
+    <Compile Include="MathLibraryTests.cs" />
     <Compile Include="SLAVTests.cs" />
     <Compile Include="SSLOperationsTests.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="VertexTests.cs" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\MathLib\MathLib.csproj">
-      <Project>{BBF481AB-A3AB-4C6F-AAA2-4481CA0EBB29}</Project>
-      <Name>MathLib</Name>
-    </ProjectReference>
     <ProjectReference Include="..\StraightSkeletonLib\StraightSkeletonLib.csproj">
       <Project>{740AC952-F47B-4CB2-A98F-E479CFDC3D26}</Project>
       <Name>StraightSkeletonLib</Name>

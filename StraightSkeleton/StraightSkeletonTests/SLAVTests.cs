@@ -144,11 +144,6 @@ namespace StraightSkeletonTests
             localLav.Add(v8);
             localLav.Add(v9);
 
-            SSLOperations.SetVertexType(localLav);
-            SSLOperations.ComputeAngleBisectors(localLav);
-
-
-
             slav.Insert(v1, 0);
             slav.Insert(v2, 0);
             slav.Insert(v3, 0);
@@ -158,6 +153,10 @@ namespace StraightSkeletonTests
             slav.Insert(v7, 0);
             slav.Insert(v8, 0);
             slav.Insert(v9, 0);
+
+
+            SSLOperations.SetVertexType(localLav);
+            SSLOperations.ComputeAngleBisectors(localLav);
 
 
             SSLOperations.SetVertexType(slav.Get(0));

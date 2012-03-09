@@ -2,7 +2,6 @@
 using System.Collections.Generic;
 
 using StraightSkeletonLib;
-using MathLib;
 
 using NUnit.Framework;
 
@@ -147,11 +146,11 @@ namespace StraightSkeletonTests
             //foreach (LineSegment ls in result)
                 //Console.WriteLine(ls.ToString());
 
-            Assert.AreEqual(new LineSegment(2, 6, 4, 4), result[0]);
-            Assert.AreEqual(new LineSegment(2, 2, 4, 4), result[1]);
-            Assert.AreEqual(new LineSegment(15, 2, 13, 4), result[2]);
-            Assert.AreEqual(new LineSegment(15, 6, 13, 4), result[3]);
-            Assert.AreEqual(new LineSegment(4, 4, 13, 4), result[4]);
+            Assert.AreEqual(new LineSegment(new Vertex(2, 6), new Vertex(4, 4)), result[0]);
+            Assert.AreEqual(new LineSegment(new Vertex(2, 2), new Vertex(4, 4)), result[1]);
+            Assert.AreEqual(new LineSegment(new Vertex(15, 2), new Vertex(13, 4)), result[2]);
+            Assert.AreEqual(new LineSegment(new Vertex(15, 6), new Vertex(13, 4)), result[3]);
+            Assert.AreEqual(new LineSegment(new Vertex(4, 4), new Vertex(13, 4)), result[4]);
         }
 
         //[Test]

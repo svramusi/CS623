@@ -1,11 +1,10 @@
 ﻿using System;
 
-using MathLib;
 using StraightSkeletonLib;
 
 using NUnit.Framework;
 
-namespace MathLibTests
+namespace StraightSkeletonTests
 {
     [TestFixture]
     public class MathLibraryTests

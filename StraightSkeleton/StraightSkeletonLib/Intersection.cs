@@ -1,7 +1,5 @@
 ﻿using System;
 
-using MathLib;
-
 namespace StraightSkeletonLib
 {
     public class Intersection
@@ -13,9 +11,12 @@ namespace StraightSkeletonLib
         private Vertex vA;
         private Vertex vB;
 
+        private LineSegment lsVA;
+        private LineSegment lsVB;
+
         private Vertex.VertexType type;
 
-        public Intersection(double x, double y, Vertex vA, Vertex vB, Vertex.VertexType type)
+        public Intersection(double x, double y, Vertex vA, Vertex vB, Vertex.VertexType type, LineSegment lsVA, LineSegment lsVB)
         {
             this.x = x;
             this.y = y;
@@ -24,6 +25,9 @@ namespace StraightSkeletonLib
             this.vB = vB;
 
             this.type = type;
+
+            this.lsVA = lsVA;
+            this.lsVB = lsVB;
 
             this.distance = MathLibrary.GetDistanceBetweenLineAndVertex(vA, vB, new Vertex(x, y));
         }
@@ -68,6 +72,16 @@ namespace StraightSkeletonLib
         public Vertex GetVB()
         {
             return this.vB;
+        }
+
+        public LineSegment GetLSVA()
+        {
+            return this.lsVA;
+        }
+
+        public LineSegment GetLSVB()
+        {
+            return this.lsVB;
         }
 
         public override bool Equals(object obj)

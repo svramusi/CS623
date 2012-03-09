@@ -1,8 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
 
-using MathLib;
-
 namespace StraightSkeletonLib
 {
     public class SLAV
@@ -50,6 +48,9 @@ namespace StraightSkeletonLib
             foreach (Vertex currentVertex in lav)
             {
                 nextVertex = currentVertex.GetNextVertex();
+
+                if (currentVertex.Equals(v) || nextVertex.Equals(v))
+                    continue;
                 
                 line1 = MathLibrary.GetLineEquation(currentVertex, currentVertex.AngleBisector);
                 line2 = MathLibrary.GetLineEquation(nextVertex, nextVertex.AngleBisector);
@@ -118,6 +119,10 @@ namespace StraightSkeletonLib
                         splitVertex.GetNextVertex().SetPrevVertex(newVertex1);
 
 
+                        SSLOperations.SetVertexType(newVertex1);
+                        newVertex1.AngleBisector = MathLibrary.GetAngleBisectorVertex(newVertex1.GetPrevLineSegment(), newVertex1.GetNextLineSegment());
+
+
 
                         Vertex newVertex2 = new Vertex(v.AngleBisector.GetX(), v.AngleBisector.GetY());
                         newVertex2.SetNextVertex(refNext);
@@ -126,6 +131,12 @@ namespace StraightSkeletonLib
                         splitVertex.GetPrevVertex().SetNextVertex(newVertex2);
                         referenceVertex.GetNextVertex().SetPrevVertex(newVertex2);
 
+
+                        SSLOperations.SetVertexType(newVertex2);
+                        newVertex2.AngleBisector = MathLibrary.GetAngleBisectorVertex(newVertex2.GetPrevLineSegment(), newVertex2.GetNextLineSegment());
+
+
+                        //CREATE NEW LAV
                         Console.WriteLine("adding : " + newVertex2 + " to " + (lavIndex + 1));
                         this.Insert(newVertex2, lavIndex + 1);
                         Vertex counterVertex2 = newVertex2.GetNextVertex();
@@ -159,6 +170,9 @@ namespace StraightSkeletonLib
                                 newVertex.SetNextVertex(nextVertex);
                                 
                                 matchVertex.GetPrevVertex().SetNextVertex(newVertex);
+
+                                SSLOperations.SetVertexType(newVertex);
+                                newVertex.AngleBisector = MathLibrary.GetAngleBisectorVertex(newVertex.GetPrevLineSegment(), newVertex.GetNextLineSegment());
                                 
                                 this.Insert(newVertex, lavIndex + 1);
 

@@ -1,10 +1,8 @@
 ﻿using System;
 
-using StraightSkeletonLib;
-
 //SOME MATH CALCULATIONS TAKEN FROM http://people.sc.fsu.edu/~jburkardt/cpp_src/geometry/geometry.cpp 
 
-namespace MathLib
+namespace StraightSkeletonLib
 {
     public class MathLibrary
     {

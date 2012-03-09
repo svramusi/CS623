@@ -75,6 +75,24 @@ namespace StraightSkeletonTests
             Assert.AreEqual(v2, v1.GetPrevVertex());
         }
 
+
+        [Test]
+        public void TestLineSegmentEdges()
+        {
+            Vertex v1 = new Vertex(0, 1);
+            Vertex v2 = new Vertex(0, 0);
+            Vertex v3 = new Vertex(1, 0);
+
+            Assert.IsNull(v2.GetPrevLineSegment());
+            Assert.IsNull(v2.GetNextLineSegment());
+
+            v2.SetPrevVertex(v1);
+            v2.SetNextVertex(v3);
+
+            Assert.AreEqual(new LineSegment(v1, v2), v2.GetPrevLineSegment());
+            Assert.AreEqual(new LineSegment(v2, v3), v2.GetNextLineSegment());
+        }
+
         [Test]
         public void TestNullComparison()
         {

@@ -40,7 +40,9 @@
     <Compile Include="Intersection.cs" />
     <Compile Include="IntersectionQueue.cs" />
     <Compile Include="LAV.cs" />
+    <Compile Include="LineEquation.cs" />
     <Compile Include="LineSegment.cs" />
+    <Compile Include="MathLibrary.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="SLAV.cs" />
     <Compile Include="SSLOperations.cs" />
