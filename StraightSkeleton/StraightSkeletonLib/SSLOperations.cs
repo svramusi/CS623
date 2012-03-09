@@ -13,9 +13,16 @@ namespace StraightSkeletonLib
             {
                 v.AngleBisector = MathLibrary.GetAngleBisectorVertex(v.GetPrevLineSegment(), v.GetNextLineSegment());
 
-                if (v.Type == Vertex.VertexType.Split)
+                if (v.AngleBisector == null)
                 {
-                    v.AngleBisector = MathLibrary.Rotate(v, v.AngleBisector, 180);
+                    v.AngleBisector = new Vertex(double.PositiveInfinity, double.PositiveInfinity);
+                }
+                else
+                {
+                    if (v.Type == Vertex.VertexType.Split)
+                    {
+                        v.AngleBisector = MathLibrary.Rotate(v, v.AngleBisector, 180);
+                    }
                 }
             }
         }
@@ -25,8 +32,8 @@ namespace StraightSkeletonLib
             Vertex next = v.GetNextVertex();
             Vertex prev = v.GetPrevVertex();
 
-            Vertex nextIntersection = MathLibrary.GetIntersectionPoint(MathLibrary.GetLineEquation(next, next.AngleBisector), MathLibrary.GetLineEquation(v, v.AngleBisector));
-            Vertex prevIntersection = MathLibrary.GetIntersectionPoint(MathLibrary.GetLineEquation(prev, prev.AngleBisector), MathLibrary.GetLineEquation(v, v.AngleBisector));
+            Vertex nextIntersection = MathLibrary.GetIntersectionPoint(new LineSegment(next, next.AngleBisector), new LineSegment(v, v.AngleBisector));
+            Vertex prevIntersection = MathLibrary.GetIntersectionPoint(new LineSegment(prev, prev.AngleBisector), new LineSegment(v, v.AngleBisector));
 
             Vertex.VertexType type = Vertex.VertexType.Undefined;
 
@@ -37,7 +44,7 @@ namespace StraightSkeletonLib
                 else
                     type = Vertex.VertexType.Edge;
 
-                Intersection i = new Intersection(nextIntersection.GetX(), nextIntersection.GetY(), next, v, type, null, null);
+                Intersection i = new Intersection(nextIntersection.GetX(), nextIntersection.GetY(), next, v, type, next.GetNextLineSegment(), v.GetPrevLineSegment());
                 //Console.WriteLine("i'm " + v.ToString() + " and my cloests intersection is x: " + i.GetX() + " y: " + i.GetY() + " distance: " + i.Distance);
                 return i;
             }
@@ -48,7 +55,7 @@ namespace StraightSkeletonLib
                 else
                     type = Vertex.VertexType.Edge;
 
-                Intersection i = new Intersection(prevIntersection.GetX(), prevIntersection.GetY(), v, prev, type, null, null);
+                Intersection i = new Intersection(prevIntersection.GetX(), prevIntersection.GetY(), v, prev, type, prev.GetPrevLineSegment(), v.GetNextLineSegment());
                 //Console.WriteLine("i'm " + v.ToString() + " and my cloests intersection is x: " + i.GetX() + " y: " + i.GetY() + " distance: " + i.Distance);
                 return i;
             }
@@ -75,48 +82,62 @@ namespace StraightSkeletonLib
 
             while (!queue.IsEmpty())
             {
-                Intersection intersection = GetMinIntersection();
+                while (!queue.IsEmpty())
+                {
+                    Intersection intersection = GetMinIntersection();
 
-                if (intersection.Type == Vertex.VertexType.Undefined)
-                {
-                    throw new Exception("Undefined vertex type.");
-                }
-                
-                if (!intersection.GetVA().Processed && !intersection.GetVB().Processed)
-                {
-                    if (intersection.Type == Vertex.VertexType.Edge)
+                    if (intersection.Type == Vertex.VertexType.Undefined)
+                    {
+                        throw new Exception("Undefined vertex type.");
+                    }
+
+                    if (!intersection.GetVA().Processed && !intersection.GetVB().Processed)
                     {
                         double intersectionX = Math.Round(intersection.GetX(), 2);
                         double intersectionY = Math.Round(intersection.GetY(), 2);
 
                         Vertex intersectionVertex = new Vertex(intersectionX, intersectionY);
 
-                        result.Add(new LineSegment(intersection.GetVB(), intersectionVertex));
-                        result.Add(new LineSegment(intersection.GetVA(), intersectionVertex));
+                        if (intersection.Type == Vertex.VertexType.Edge || intersection.Type == Vertex.VertexType.Split)
+                        {
+                            result.Add(new LineSegment(intersection.GetVB(), intersectionVertex));
+                            result.Add(new LineSegment(intersection.GetVA(), intersectionVertex));
 
-                        Vertex newVertex = new Vertex(intersectionX, intersectionY);
-                        setListOfActiveVertices.Get(lavIndex).Insert(newVertex, intersection.GetVB(), intersection.GetVA());
+                            setListOfActiveVertices.Get(lavIndex).Insert(intersectionVertex, intersection.GetVB(), intersection.GetVA());
 
-                        SetVertexType(newVertex);
-                        newVertex.AngleBisector = MathLibrary.GetAngleBisectorVertex(newVertex.GetPrevLineSegment(), newVertex.GetNextLineSegment());
+                            SetVertexType(intersectionVertex);
+                            intersectionVertex.AngleBisector = MathLibrary.GetAngleBisectorVertex(intersection.GetVB().GetPrevLineSegment(), intersection.GetVA().GetNextLineSegment());
+
+                            if (intersectionVertex.AngleBisector == null) //THE LINES ARE PARALLEL
+                            {
+                                intersectionVertex.AngleBisector = MathLibrary.Rotate(intersectionVertex, MathLibrary.GetAngleBisectorVertex(new LineSegment(intersectionVertex, intersection.GetVB()), new LineSegment(intersectionVertex, intersection.GetVA())), 180);
+                            }
+                        }
+                            /*
+                        else if (intersection.Type == Vertex.VertexType.Split)
+                        {
+                            result.Add(new LineSegment(intersection.GetVB(), intersectionVertex));
+                        }
+                             * */
+
+                        intersection.GetVA().SetProcessed();
+                        intersection.GetVB().SetProcessed();
                     }
 
-                    intersection.GetVA().SetProcessed();
-                    intersection.GetVB().SetProcessed();
+
+
+                    Console.WriteLine(intersection);
                 }
 
-
-
-                Console.WriteLine(intersection);
-            }
-
-            Vertex startVertex = setListOfActiveVertices.Get(lavIndex).GetStart();
-            if (startVertex.GetNextVertex().GetNextVertex().Equals(startVertex))
-            {
-                result.Add(new LineSegment(startVertex, startVertex.GetNextVertex()));
-            }
-            else
-            {
+                Vertex startVertex = setListOfActiveVertices.Get(lavIndex).GetStart();
+                if (startVertex.GetNextVertex().GetNextVertex().Equals(startVertex))
+                {
+                    result.Add(new LineSegment(startVertex, startVertex.GetNextVertex()));
+                }
+                else
+                {
+                    SSLOperations.GeneratePriorityQueue(setListOfActiveVertices.Get(lavIndex));
+                }
             }
 
 

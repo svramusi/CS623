@@ -38,10 +38,7 @@ namespace StraightSkeletonLib
         public void BreakAndCreateNew(Vertex v, int lavIndex)
         {
             LAV lav = this.Get(lavIndex);
-
-            LineEquation line1 = null;
-            LineEquation line2 = null;
-
+            
             Vertex nextVertex = null;
             Vertex intersection = null;
 
@@ -51,10 +48,8 @@ namespace StraightSkeletonLib
 
                 if (currentVertex.Equals(v) || nextVertex.Equals(v))
                     continue;
-                
-                line1 = MathLibrary.GetLineEquation(currentVertex, currentVertex.AngleBisector);
-                line2 = MathLibrary.GetLineEquation(nextVertex, nextVertex.AngleBisector);
-                intersection = MathLibrary.GetIntersectionPoint(line1, line2);
+
+                intersection = MathLibrary.GetIntersectionPoint(new LineSegment(currentVertex, currentVertex.AngleBisector), new LineSegment(nextVertex, nextVertex.AngleBisector));
                 
                 //IF THE BISECTORS DON'T INTERSECT, OR INTERSECT BEHIND THE LINE, IT MUST BE A QUADRALATERAL
                 if ((currentVertex.GetX() < nextVertex.GetX() && (intersection.GetY() < currentVertex.GetY() && intersection.GetY() < nextVertex.GetY())) || 
@@ -73,6 +68,8 @@ namespace StraightSkeletonLib
                     else
                         maxDistance = distanceNext * 10; //MAKE IT A LITTLE BIGGER JUST TO BE SURE
 
+                    LineEquation line1 = MathLibrary.GetLineEquation(currentVertex, currentVertex.AngleBisector);
+                    LineEquation line2 = MathLibrary.GetLineEquation(nextVertex, nextVertex.AngleBisector);
                     Vertex rectCurrent = new Vertex(line1.GetX(maxDistance + currentVertex.GetY()), maxDistance + currentVertex.GetY());
                     Vertex rectNext = new Vertex(line2.GetX(maxDistance + nextVertex.GetY()), maxDistance + nextVertex.GetY());
                     

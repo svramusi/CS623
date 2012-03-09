@@ -45,6 +45,10 @@ namespace StraightSkeletonLib
 
             Vertex intersection = GetIntersectionPoint(ls1, ls2);
 
+            //THE LINES ARE PARALLEL
+            if (double.IsInfinity(intersection.GetX()) || double.IsNaN(intersection.GetX()) || double.IsInfinity(intersection.GetY()) || double.IsNaN(intersection.GetY()))
+                return null;
+
             //ls1 = prev
             //ls2 = next
             //intersection = current
