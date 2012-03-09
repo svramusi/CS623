@@ -1,4 +1,28 @@
 ﻿<?xml version="1.0" encoding="utf-8" ?>
+<!-- SIMPLE RECTANGLE -->
+<!--
+Expected Result
+	<linesegment>
+		<x>2</x><y>6</y>
+		<x>4</x><y>4</y>
+	</linesegment>
+	<linesegment>
+		<x>2</x><y>2</y>
+		<x>4</x><y>4</y>
+	</linesegment>
+	<linesegment>
+		<x>15</x><y>2</y>
+		<x>13</x><y>4</y>
+	</linesegment>
+	<linesegment>
+		<x>15</x><y>6</y>
+		<x>13</x><y>4</y>
+	</linesegment>
+	<linesegment>
+		<x>4</x><y>4</y>
+		<x>13</x><y>4</y>
+	</linesegment>
+-->
 <vertices>
   <vertex>
     <x>2</x>

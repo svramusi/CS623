@@ -1,0 +1,62 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<!--
+   X................X
+	\   		   /
+	 \		X     /
+	  \   /  \   /
+	   \ /    \ /
+	    X      X
+-->	
+<!--
+Expected Result
+	<linesegment>
+		<x>6</x><y>0</y>
+		<x>5.55</x><y>1.69</y>
+	</linesegment>
+	<linesegment>
+		<x>8</x><y>3</y>
+		<x>5.55</x><y>1.69</y>
+	</linesegment>
+	<linesegment>
+		<x>0</x><y>3</y>
+		<x>2.45</x><y>1.69</y>
+	</linesegment>
+	<linesegment>
+		<x>2</x><y>0</y>
+		<x>2.45</x><y>1.69</y>
+	</linesegment>
+	<linesegment>
+		<x>5.55</x><y>1.69</y>
+		<x>4</x><y>2.06</y>
+	</linesegment>
+	<linesegment>
+		<x>2.45</x><y>1.69</y>
+		<x>4</x><y>2.06</y>
+	</linesegment>
+	<linesegment>
+		<x>4</x><y>1</y>
+		<x>4</x><y>2.06</y>
+	</linesegment>
+-->
+<vertices>
+  <vertex>
+    <x>0</x>
+    <y>3</y>
+  </vertex>
+  <vertex>
+    <x>2</x>
+    <y>0</y>
+  </vertex>
+  <vertex>
+    <x>4</x>
+    <y>1</y>
+  </vertex>
+  <vertex>
+    <x>6</x>
+    <y>0</y>
+  </vertex>
+  <vertex>
+    <x>8</x>
+    <y>3</y>
+  </vertex>
+</vertices>

@@ -1,4 +1,54 @@
 ﻿<?xml version="1.0" encoding="utf-8" ?>
+<!--
+X.......................X
+|						|
+|						|
+|						|
+|			X...........X
+|			|
+|			|
+|			|
+X...........X
+-->
+<!--
+Expected Result
+	<linesegment>
+		<x>8</x><y>3</y>
+		<x>6.5</x><y>4.5</y>
+	</linesegment>
+	<linesegment>
+		<x>8</x><y>6</y>
+		<x>6.5</x><y>4.5</y>
+	</linesegment>
+	<linesegment>
+		<x>0</x><y>0</y>
+		<x>2</x><y>2</y>
+	</linesegment>
+	<linesegment>
+		<x>4</x><y>0</y>
+		<x>2</x><y>2</y>
+	</linesegment>
+	<linesegment>
+		<x>0</x><y>6</y>
+		<x>2</x><y>4</y>
+	</linesegment>
+	<linesegment>
+		<x>2</x><y>2</y>
+		<x>2</x><y>4</y>
+	</linesegment>
+	<linesegment>
+		<x>4</x><y>3</y>
+		<x>2.5</x><y>4.5</y>
+	</linesegment>
+	<linesegment>
+		<x>6.5</x><y>4.5</y>
+		<x>2.5</x><y>4.5</y>
+	</linesegment>
+	<linesegment>
+		<x>2</x><y>4</y>
+		<x>2.5</x><y>4.5</y>
+	</linesegment>
+-->
 <vertices>
   <vertex>
     <x>0</x>
